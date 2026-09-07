@@ -1,0 +1,154 @@
+---
+const perks = [
+  { icon: '📚', text: 'Bộ tài liệu đào tạo hoàn chỉnh, chuẩn chuyên nghiệp' },
+  { icon: '🎨', text: 'Tùy chỉnh theo nhận diện thương hiệu của bạn / doanh nghiệp' },
+  { icon: '⚡', text: 'Áp dụng được ngay ngày hôm sau' },
+  { icon: '🤖', text: 'Có bộ trợ lý AI hỗ trợ đóng gói tri thức đi kèm' },
+];
+
+const managerPoints = [
+  'Chấm dứt cảnh "mỗi lần dạy một kiểu"',
+  'Chặn đứng tam sao thất bản',
+  'Đội ngũ tự chạy, ít sai sót',
+  'Giành lại quỹ thời gian cho chiến lược',
+  'Biết cách giao đóng gói cho nhân viên',
+];
+
+const ldhrPoints = [
+  'Khai thác tri thức từ người giỏi nhất',
+  'Thiết kế slide: từ vài ngày xuống vài phút',
+  'Tài liệu luôn sống, luôn cập nhật',
+  'Chuẩn hóa đào tạo hội nhập',
+];
+---
+
+<section class="section benefits">
+  <div class="wrap">
+    <h2 class="section-title">Bạn Nhận Được Gì</h2>
+    <p class="section-sub">🎁 Sản phẩm cầm tay sau buổi học</p>
+
+    <div class="perk-grid">
+      {perks.map((p) => (
+        <div class="perk-card card">
+          <span class="perk-icon" aria-hidden="true">{p.icon}</span>
+          <p>{p.text}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="audience-grid">
+      <div class="audience-card card audience-blue">
+        <h3>Bạn là Quản Lý · Lãnh Đạo</h3>
+        <ul>
+          {managerPoints.map((pt) => (
+            <li>
+              <span class="check check-blue" aria-hidden="true">✓</span>
+              <span>{pt}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="audience-card card audience-green">
+        <h3>Bạn là L&D · HR · Giảng Viên Nội Bộ</h3>
+        <ul>
+          {ldhrPoints.map((pt) => (
+            <li>
+              <span class="check check-green" aria-hidden="true">✓</span>
+              <span>{pt}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .perk-grid {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+
+  .perk-card {
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .perk-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .perk-card p {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy-800);
+  }
+
+  .audience-grid {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .audience-card {
+    padding: 28px;
+  }
+
+  .audience-card h3 {
+    font-size: 19px;
+  }
+
+  .audience-card ul {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+
+  .audience-card li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 500;
+    color: var(--gray-700);
+    font-size: 15px;
+  }
+
+  .check {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--white);
+  }
+
+  .check-blue {
+    background: var(--sky-500);
+  }
+
+  .check-green {
+    background: #16a34a;
+  }
+
+  @media (max-width: 880px) {
+    .perk-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .audience-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

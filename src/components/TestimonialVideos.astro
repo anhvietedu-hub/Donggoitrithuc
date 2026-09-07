@@ -1,0 +1,96 @@
+---
+// TODO(user): paste your real YouTube video IDs below (the part after v= in the URL).
+// Until filled in, the cards render as styled placeholders instead of a broken/fake embed.
+const videos = [
+  { id: '', title: 'Cảm nhận của học viên sau Module 1: Kỹ năng đóng gói tri thức' },
+  { id: '', title: 'Từ biết đến biết làm — AI trở thành công cụ hỗ trợ cho giảng viên nội bộ' },
+];
+---
+
+<section class="section-tight testimonials">
+  <div class="wrap">
+    <div class="video-grid">
+      {videos.map((v) => (
+        <div class="video-card">
+          {v.id ? (
+            <div class="video-embed">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${v.id}`}
+                title={v.title}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+          ) : (
+            <div class="video-placeholder" role="img" aria-label={v.title}>
+              <span class="play-btn" aria-hidden="true">▶</span>
+            </div>
+          )}
+          <p class="video-title">{v.title}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .video-card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    background: var(--navy-900);
+  }
+
+  .video-embed {
+    position: relative;
+    aspect-ratio: 16 / 9;
+  }
+
+  .video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .video-placeholder {
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--navy-800), var(--navy-900));
+  }
+
+  .play-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--gold-500);
+    color: var(--navy-900);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+
+  .video-title {
+    padding: 16px 18px;
+    color: var(--white);
+    font-weight: 600;
+    font-size: 14.5px;
+  }
+
+  @media (max-width: 720px) {
+    .video-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

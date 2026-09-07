@@ -1,0 +1,46 @@
+---
+import { site } from '../data/site';
+---
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <img src="/images/logo.png" alt={site.name} width="112" height="61" class="footer-logo" />
+    <p class="footer-company">{site.companyFull}</p>
+    <p class="footer-contact">
+      SĐT: {site.phone} &nbsp;·&nbsp; Email: {site.email} &nbsp;·&nbsp; Website: {site.website}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--navy-900);
+    padding: 48px 0;
+  }
+
+  .footer-inner {
+    text-align: center;
+  }
+
+  .footer-logo {
+    height: 44px;
+    width: auto;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+  }
+
+  .footer-company {
+    margin-top: 18px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .footer-contact {
+    margin-top: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+  }
+</style>

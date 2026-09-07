@@ -1,0 +1,142 @@
+---
+const modules = [
+  {
+    n: '01',
+    color: 'blue',
+    title: 'Tư Duy Đóng Gói',
+    desc: 'Gỡ đúng nút thắt khiến bạn mãi không bắt đầu được — kể cả khi đã muốn từ lâu.',
+  },
+  {
+    n: '02',
+    color: 'purple',
+    title: 'AI Là Người Đóng Gói Tri Thức?',
+    desc: 'Giao sai người đóng gói thì tài liệu không thực tế rồi xếp xó.',
+  },
+  {
+    n: '03',
+    color: 'gold',
+    title: 'Tiêu Chuẩn Bộ Tài Liệu',
+    desc: 'Khác biệt giữa nói chay và một chương trình đào tạo bài bản là dạy được, hiểu được, làm được.',
+  },
+  {
+    n: '04',
+    color: 'green',
+    title: 'Tăng Tốc Cùng AI',
+    desc: 'Từ hàng tuần xuống vài chục phút.',
+  },
+];
+
+const gallery = [
+  { src: '/images/gallery-1.jpg', alt: 'Học viên thực hành đóng gói tài liệu đào tạo trên laptop' },
+  { src: '/images/gallery-2.jpg', alt: 'Học viên thiết kế slide chương trình đào tạo' },
+  { src: '/images/gallery-3.jpg', alt: 'Nhóm học viên thảo luận trực tiếp cùng giảng viên' },
+  { src: '/images/gallery-4.jpg', alt: 'Thẻ ghi chú các bước Hình thành - Hoàn thành - Hoàn chỉnh - Hoàn hảo' },
+];
+---
+
+<section class="section curriculum">
+  <div class="wrap">
+    <div class="team-photo">
+      <img
+        src="/images/team-training.jpg"
+        alt="Đội ngũ học viên thực hành đóng gói tri thức cùng giảng viên MAVA"
+        width="1199"
+        height="936"
+      />
+    </div>
+
+    <h2 class="section-title">Các Nội Dung Chính</h2>
+
+    <div class="module-grid">
+      {modules.map((m) => (
+        <div class={`module-card card module-${m.color}`}>
+          <span class="module-n">{m.n}</span>
+          <h3>{m.title}</h3>
+          <p>{m.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="gallery-grid">
+      {gallery.map((g) => (
+        <img src={g.src} alt={g.alt} width="1001" height="1332" loading="lazy" />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .team-photo img {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    width: 100%;
+    height: auto;
+  }
+
+  .curriculum .section-title {
+    margin-top: 56px;
+  }
+
+  .module-grid {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .module-card {
+    padding: 28px;
+    border-top: 4px solid var(--gray-300);
+  }
+
+  .module-blue { border-top-color: var(--sky-500); }
+  .module-purple { border-top-color: #8b5cf6; }
+  .module-gold { border-top-color: var(--gold-500); }
+  .module-green { border-top-color: #16a34a; }
+
+  .module-n {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 34px;
+    color: var(--gray-300);
+  }
+
+  .module-blue .module-n { color: var(--sky-500); }
+  .module-purple .module-n { color: #8b5cf6; }
+  .module-gold .module-n { color: var(--gold-500); }
+  .module-green .module-n { color: #16a34a; }
+
+  .module-card h3 {
+    margin-top: 10px;
+    font-size: 19px;
+  }
+
+  .module-card p {
+    margin-top: 8px;
+    font-size: 14.5px;
+  }
+
+  .gallery-grid {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .gallery-grid img {
+    border-radius: var(--radius-md);
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    box-shadow: var(--shadow-soft);
+  }
+
+  @media (max-width: 880px) {
+    .module-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

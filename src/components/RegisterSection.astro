@@ -1,0 +1,375 @@
+---
+import { site, pricingTiers, formatVND } from '../data/site';
+---
+
+<section class="section register" id="dang-ky">
+  <div class="wrap register-wrap">
+    <h2 class="section-title left">Giữ Chỗ Ngay Hôm Nay</h2>
+
+    <div class="bonus-box card">
+      <p class="bonus-title">🎁 Tặng bạn bộ biểu mẫu x10 hiệu suất đóng gói tri thức:</p>
+      <ul>
+        <li><span class="check-gold">✓</span> Template Outline Đào Tạo Chuẩn</li>
+        <li><span class="check-gold">✓</span> Bộ Prompt AI giúp tăng hiệu suất đóng gói tri thức dành cho Giảng viên nội bộ</li>
+      </ul>
+    </div>
+
+    <div class="price-box card">
+      <span class="price-old">Giá gốc: {formatVND(site.originalPrice)}</span>
+      <div class="price-now">Chỉ từ {formatVND(pricingTiers[2].price)}/vé</div>
+      <p class="price-tiers">
+        {pricingTiers.map((t, i) => (
+          <>
+            {i > 0 && <span class="sep">·</span>}
+            <span>{t.label}: {formatVND(t.price)}/vé</span>
+          </>
+        ))}
+      </p>
+    </div>
+
+    <p class="urgency-banner">⏱ Ưu đãi kết thúc trong hôm nay hoặc khi đủ số lượng đăng ký</p>
+
+    <div class="notice card">
+      <p class="notice-title">⭐ Lưu ý quan trọng:</p>
+      <ul>
+        <li><span class="check-gold">✓</span> Link Zoom cá nhân hóa qua email đăng ký, có điểm danh và không dùng chung nhiều máy</li>
+        <li><span class="check-gold">✓</span> Bộ tài liệu đào tạo do chính học viên đó đóng gói trong buổi học — sản phẩm đầu ra là file cá nhân, không phải file dùng chung</li>
+        <li><span class="check-gold">✓</span> Được hỏi đáp trực tiếp, review sản phẩm cá nhân trong giờ học</li>
+      </ul>
+    </div>
+
+    <form class="reg-form card" action={site.formEndpoint} method="POST">
+      <h3>Thông Tin Đăng Ký</h3>
+
+      <label>
+        Họ và tên
+        <input type="text" name="ho_ten" placeholder="Nguyễn Văn A" required />
+      </label>
+
+      <label>
+        Đơn vị / doanh nghiệp
+        <input type="text" name="don_vi" placeholder="Tên công ty của bạn" />
+      </label>
+
+      <label>
+        Số điện thoại
+        <input type="tel" name="so_dien_thoai" placeholder="09xxxxxxx" required />
+      </label>
+
+      <label>
+        Email
+        <input type="email" name="email" placeholder="email@congty.com" required />
+      </label>
+
+      <label>
+        Mã VIP (nếu có)
+        <input type="text" name="ma_vip" placeholder="Nhập mã VIP nếu bạn có" />
+      </label>
+
+      <div class="qty-block">
+        <span class="qty-label">Số lượng vé</span>
+        <div class="qty-stepper">
+          <button type="button" id="qty-minus" aria-label="Giảm số lượng vé">−</button>
+          <input type="number" id="qty-input" name="so_luong_ve" value="1" min="1" readonly />
+          <button type="button" id="qty-plus" aria-label="Tăng số lượng vé">+</button>
+        </div>
+      </div>
+
+      <div class="tier-table" id="tier-table">
+        {pricingTiers.map((t) => (
+          <div class="tier-row" data-min={t.min} data-max={t.max === Infinity ? '' : t.max}>
+            <span>{t.label}</span>
+            <strong>{formatVND(t.price)}/vé</strong>
+          </div>
+        ))}
+      </div>
+
+      <div class="total-row">
+        <span id="total-label">1 vé × {formatVND(pricingTiers[0].price)}</span>
+        <strong id="total-price">{formatVND(pricingTiers[0].price)}</strong>
+      </div>
+
+      <label>
+        Thông tin xuất hoá đơn (nếu có)
+        <textarea name="xuat_hoa_don" rows="3" placeholder="Tên công ty, mã số thuế, địa chỉ..."></textarea>
+      </label>
+
+      <input type="hidden" name="tong_tien" id="hidden-total" value={pricingTiers[0].price} />
+
+      <button type="submit" class="btn btn-gold btn-block submit-btn">
+        Giữ Ưu Đãi Cho Tôi — Đăng Ký Ngay
+      </button>
+    </form>
+  </div>
+</section>
+
+<script define:vars={{ tiers: pricingTiers }}>
+  const qtyInput = document.getElementById('qty-input');
+  const minusBtn = document.getElementById('qty-minus');
+  const plusBtn = document.getElementById('qty-plus');
+  const totalLabel = document.getElementById('total-label');
+  const totalPrice = document.getElementById('total-price');
+  const hiddenTotal = document.getElementById('hidden-total');
+  const tierRows = document.querySelectorAll('.tier-row');
+
+  function formatVND(n) {
+    return n.toLocaleString('vi-VN') + 'đ';
+  }
+
+  function priceFor(qty) {
+    // note: Infinity does not survive JSON serialization (define:vars), so a missing/null max means "no upper bound"
+    const tier = tiers.find((t) => qty >= t.min && (t.max == null || qty <= t.max)) ?? tiers[0];
+    return tier.price;
+  }
+
+  function render() {
+    const qty = parseInt(qtyInput.value, 10) || 1;
+    const price = priceFor(qty);
+    const total = qty * price;
+
+    totalLabel.textContent = `${qty} vé × ${formatVND(price)}`;
+    totalPrice.textContent = formatVND(total);
+    hiddenTotal.value = String(total);
+
+    tierRows.forEach((row) => {
+      const min = parseInt(row.dataset.min, 10);
+      const maxAttr = row.dataset.max;
+      const max = maxAttr === '' ? Infinity : parseInt(maxAttr, 10);
+      row.classList.toggle('active', qty >= min && qty <= max);
+    });
+  }
+
+  minusBtn.addEventListener('click', () => {
+    const qty = Math.max(1, (parseInt(qtyInput.value, 10) || 1) - 1);
+    qtyInput.value = String(qty);
+    render();
+  });
+
+  plusBtn.addEventListener('click', () => {
+    const qty = (parseInt(qtyInput.value, 10) || 1) + 1;
+    qtyInput.value = String(qty);
+    render();
+  });
+
+  render();
+</script>
+
+<style>
+  .register {
+    background: var(--gray-100);
+  }
+
+  .register-wrap {
+    max-width: 720px;
+  }
+
+  .section-title.left {
+    text-align: left;
+  }
+
+  .bonus-box,
+  .price-box,
+  .notice,
+  .reg-form {
+    margin-top: 20px;
+    padding: 26px;
+  }
+
+  .bonus-title {
+    font-weight: 700;
+    color: var(--navy-800);
+  }
+
+  .bonus-box ul,
+  .notice ul {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 0;
+    display: grid;
+    gap: 10px;
+  }
+
+  .bonus-box li,
+  .notice li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 15px;
+    color: var(--gray-700);
+  }
+
+  .check-gold {
+    flex-shrink: 0;
+    color: var(--gold-600);
+    font-weight: 800;
+  }
+
+  .price-old {
+    color: var(--gray-500);
+    text-decoration: line-through;
+    font-size: 14px;
+  }
+
+  .price-now {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 30px;
+    color: var(--gold-500);
+    margin-top: 4px;
+  }
+
+  .price-tiers {
+    margin-top: 8px;
+    font-size: 14px;
+  }
+
+  .sep {
+    margin: 0 8px;
+    color: var(--gray-300);
+  }
+
+  .urgency-banner {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--gold-600);
+    background: var(--gold-100);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+  }
+
+  .notice {
+    border: 1.5px solid #f0b0b0;
+  }
+
+  .notice-title {
+    font-weight: 700;
+    color: var(--navy-800);
+  }
+
+  .reg-form h3 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 22px;
+  }
+
+  .reg-form label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--navy-800);
+    margin-top: 16px;
+  }
+
+  .reg-form input,
+  .reg-form textarea {
+    width: 100%;
+    margin-top: 6px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--gray-900);
+  }
+
+  .reg-form input:focus,
+  .reg-form textarea:focus {
+    outline: none;
+    border-color: var(--gold-500);
+  }
+
+  .qty-block {
+    margin-top: 20px;
+  }
+
+  .qty-label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--navy-800);
+  }
+
+  .qty-stepper {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .qty-stepper button {
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: var(--gray-100);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy-800);
+  }
+
+  .qty-stepper button:hover {
+    background: var(--gold-100);
+  }
+
+  .qty-stepper input {
+    width: 56px;
+    text-align: center;
+    border: none;
+    border-left: 1.5px solid var(--gray-300);
+    border-right: 1.5px solid var(--gray-300);
+    height: 44px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .tier-table {
+    margin-top: 18px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+
+  .tier-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--gray-300);
+    color: var(--gray-700);
+  }
+
+  .tier-row:last-child {
+    border-bottom: none;
+  }
+
+  .tier-row.active {
+    background: var(--gold-100);
+    color: var(--navy-800);
+    font-weight: 700;
+    border-left: 3px solid var(--gold-500);
+  }
+
+  .total-row {
+    margin-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 18px;
+    background: var(--gray-100);
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+  }
+
+  .total-row strong {
+    color: var(--gold-600);
+    font-size: 19px;
+  }
+
+  .submit-btn {
+    margin-top: 24px;
+    font-size: 17px;
+    padding: 17px;
+  }
+</style>

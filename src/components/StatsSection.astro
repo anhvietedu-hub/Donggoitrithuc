@@ -1,0 +1,88 @@
+---
+const stats = [
+  { value: '4.94/5', label: 'Hài lòng chung' },
+  { value: '100%', label: 'NPS (sẵn sàng giới thiệu)' },
+  { value: '4.94/5', label: 'Giảng viên' },
+];
+---
+
+<section class="section stats">
+  <div class="wrap">
+    <h2 class="section-title">Đánh giá và cảm nhận học viên về chất lượng sau khi học</h2>
+
+    <div class="stats-panel">
+      <p class="stats-kicker">Chỉ số KPI tổng thể</p>
+      <div class="stats-grid">
+        {stats.map((s) => (
+          <div class="stat-card">
+            <div class="stat-value">{s.value}</div>
+            <div class="stat-label">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats {
+    background: var(--gray-100);
+  }
+
+  .stats-panel {
+    margin-top: 36px;
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stats-kicker {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--navy-800);
+    border-left: 4px solid var(--gold-500);
+    padding-left: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .stats-grid {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .stat-card {
+    background: var(--navy-900);
+    border-radius: var(--radius-md);
+    padding: 26px 22px;
+    border-bottom: 4px solid var(--gold-500);
+  }
+
+  .stat-value {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 34px;
+    color: var(--gold-400);
+  }
+
+  .stat-label {
+    margin-top: 8px;
+    color: var(--white);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-weight: 600;
+  }
+
+  @media (max-width: 720px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

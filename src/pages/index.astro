@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+import SiteHeader from '../components/SiteHeader.astro';
+import Hero from '../components/Hero.astro';
+import TestimonialVideos from '../components/TestimonialVideos.astro';
+import ProblemSection from '../components/ProblemSection.astro';
+import SolutionSection from '../components/SolutionSection.astro';
+import BenefitsSection from '../components/BenefitsSection.astro';
+import CurriculumSection from '../components/CurriculumSection.astro';
+import StatsSection from '../components/StatsSection.astro';
+import RegisterSection from '../components/RegisterSection.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const title = 'Khóa học Kỹ năng Đóng gói Tri thức | MAVA';
+const description =
+  'Khóa học giúp quản lý cấp trung, L&D, HR biến tri thức và kinh nghiệm thành bộ tài liệu đào tạo hoàn chỉnh chỉ trong 1 buổi học. Online qua Zoom, ưu đãi có hạn.';
+---
+
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/images/logo.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/images/hero.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <SiteHeader />
+    <Hero />
+    <TestimonialVideos />
+    <ProblemSection />
+    <SolutionSection />
+    <BenefitsSection />
+    <CurriculumSection />
+    <StatsSection />
+    <RegisterSection />
+    <SiteFooter />
+  </body>
+</html>

@@ -1,0 +1,197 @@
+---
+import { site, formatVND, pricingTiers } from '../data/site';
+---
+
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>
+        <span class="line-muted">Khóa học kỹ năng</span>
+        <span class="line-gold">đóng gói tri thức</span>
+      </h1>
+      <p class="hero-lead">
+        Khóa học giúp bạn biến tri thức, kinh nghiệm thành bộ tài liệu đào tạo
+        hoàn chỉnh <strong>chỉ trong 1 buổi học</strong>.
+      </p>
+
+      <div class="price-block">
+        <div class="price-row">
+          <span class="price-old">Giá gốc: {formatVND(site.originalPrice)}</span>
+          <span class="price-now">Chỉ từ {formatVND(pricingTiers[2].price)}/vé</span>
+        </div>
+        <p class="price-tiers">
+          {pricingTiers.map((t, i) => (
+            <>
+              {i > 0 && <span class="sep">·</span>}
+              <span>{t.label}: {formatVND(t.price)}/vé</span>
+            </>
+          ))}
+        </p>
+      </div>
+
+      <a href="#dang-ky" class="btn btn-gold btn-block hero-cta">Đăng ký ngay</a>
+
+      <p class="urgency">⏱ Ưu đãi kết thúc trong hôm nay hoặc khi đủ số lượng</p>
+
+      <div class="meta-row">
+        <div class="meta-item">
+          <span class="meta-icon" aria-hidden="true">🕐</span>
+          <div>
+            <div class="meta-label">Thời gian</div>
+            <div class="meta-value">{site.eventTimeLabel} ngày {site.eventDateLabel}</div>
+          </div>
+        </div>
+        <div class="meta-item">
+          <span class="meta-icon" aria-hidden="true">⭐</span>
+          <div>
+            <div class="meta-label">Hình thức</div>
+            <div class="meta-value">{site.format}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-media">
+      <img
+        src="/images/hero.jpg"
+        alt="Đội ngũ MAVA trong sự kiện Chương trình Kỹ năng Đóng gói Tri thức"
+        width="1448"
+        height="1086"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 48px 0 24px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  h1 {
+    font-size: clamp(32px, 4.4vw, 48px);
+    font-weight: 700;
+  }
+
+  .line-muted {
+    display: block;
+    color: var(--gray-500);
+  }
+
+  .line-gold {
+    display: block;
+    color: var(--gold-500);
+  }
+
+  .hero-lead {
+    margin-top: 20px;
+    font-size: 18px;
+    max-width: 46ch;
+  }
+
+  .hero-lead strong {
+    color: var(--gold-600);
+  }
+
+  .price-block {
+    margin-top: 26px;
+  }
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .price-old {
+    color: var(--gray-500);
+    text-decoration: line-through;
+    font-size: 16px;
+  }
+
+  .price-now {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(26px, 3vw, 34px);
+    color: var(--gold-500);
+  }
+
+  .price-tiers {
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--gray-700);
+  }
+
+  .sep {
+    margin: 0 8px;
+    color: var(--gray-300);
+  }
+
+  .hero-cta {
+    margin-top: 22px;
+    font-size: 18px;
+    padding: 17px 28px;
+  }
+
+  .urgency {
+    margin-top: 12px;
+    text-align: center;
+    color: var(--gold-600);
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .meta-row {
+    margin-top: 28px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .meta-icon {
+    font-size: 20px;
+  }
+
+  .meta-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gray-500);
+    font-weight: 600;
+  }
+
+  .meta-value {
+    font-weight: 600;
+    color: var(--navy-800);
+  }
+
+  .hero-media img {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    aspect-ratio: 1448 / 1086;
+    object-fit: cover;
+  }
+
+  @media (max-width: 880px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-media {
+      order: -1;
+    }
+  }
+</style>

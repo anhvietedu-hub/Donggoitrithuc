@@ -1,0 +1,47 @@
+---
+import { site } from '../data/site';
+---
+
+<header class="header">
+  <div class="wrap header-inner">
+    <a href="#top" class="logo">
+      <img src="/images/logo.png" alt={site.name} width="112" height="61" />
+    </a>
+    <a href="#dang-ky" class="btn btn-gold header-cta">Đăng ký ngay</a>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gray-300);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .logo img {
+    height: 40px;
+    width: auto;
+  }
+
+  .header-cta {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    .logo img {
+      height: 34px;
+    }
+  }
+</style>
