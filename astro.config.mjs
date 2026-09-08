@@ -3,5 +3,5 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://mavatraining.com',
+  site: 'https://donggoi.mavatraining.com',
 });
