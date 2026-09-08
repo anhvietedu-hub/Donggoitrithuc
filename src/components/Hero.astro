@@ -69,9 +69,9 @@ import { site, formatVND, pricingTiers } from '../data/site';
 
   .hero-grid {
     display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-columns: 1.3fr 0.85fr;
     gap: 48px;
-    align-items: start;
+    align-items: center;
   }
 
   h1 {
@@ -183,6 +183,8 @@ import { site, formatVND, pricingTiers } from '../data/site';
     box-shadow: var(--shadow-card);
     aspect-ratio: 1448 / 1086;
     object-fit: cover;
+    max-height: 360px;
+    width: 100%;
   }
 
   @media (max-width: 880px) {
