@@ -59,7 +59,7 @@ const gallery = [
 
     <div class="gallery-grid">
       {gallery.map((g) => (
-        <img src={g.src} alt={g.alt} width="1001" height="1332" loading="lazy" />
+        <img src={g.src} alt={g.alt} loading="lazy" />
       ))}
     </div>
   </div>
@@ -124,6 +124,8 @@ const gallery = [
   }
 
   .gallery-grid img {
+    width: 100%;
+    height: auto;
     border-radius: var(--radius-md);
     aspect-ratio: 3 / 4;
     object-fit: cover;
