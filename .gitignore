@@ -25,3 +25,5 @@ pnpm-debug.log*
 
 # raw material extracted from the source PDF (large, not needed to run the site)
 source-assets/
+
+.vercel
