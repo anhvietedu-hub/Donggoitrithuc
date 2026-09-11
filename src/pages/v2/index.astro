@@ -1,0 +1,563 @@
+---
+import '../../styles/v2.css';
+
+const title = 'Kỹ năng Đóng gói Tri thức — MAVA';
+const description = 'Biến kinh nghiệm chuyên môn thành một hệ thống tri thức có thể học, dùng và nhân rộng cùng MAVA.';
+
+const navItems = [
+  ['Hệ thống', 'he-thong'],
+  ['Lộ trình', 'lo-trinh'],
+  ['Sản phẩm', 'san-pham'],
+  ['Người hướng dẫn', 'nguoi-huong-dan'],
+  ['Học phí', 'hoc-phi'],
+];
+
+const pains = [
+  ['01', 'Bạn đang dạy lại cùng một điều', 'Mỗi lần có người mới, bạn lại mở laptop, kể từ đầu và hy vọng họ nhớ đủ.'],
+  ['02', 'Kinh nghiệm quý nhưng khó gọi tên', 'Bạn biết cách làm tốt, nhưng không biết bắt đầu khai thác và sắp xếp nó thành bài học.'],
+  ['03', 'Nội dung làm xong rồi… để đó', 'Một file slide, một video, một buổi chia sẻ không tạo thành hệ thống nếu thiếu đầu ra và nhịp vận hành.'],
+];
+
+const audiences = [
+  {
+    id: 'chuyen-gia',
+    label: 'Chuyên gia nội bộ',
+    title: 'Đừng để kinh nghiệm chỉ nằm trong đầu bạn.',
+    text: 'Bạn có cách làm đã được kiểm chứng. MAVA giúp bạn biến nó thành một tài sản có thể truyền lại, cập nhật và nhân rộng.',
+    points: ['Đóng gói phương pháp riêng thành khóa học đầu tiên', 'Giảm thời gian kèm cặp lặp lại', 'Xây uy tín chuyên gia bằng sản phẩm thật'],
+    image: '/images/v2/workshop.jpg',
+  },
+  {
+    id: 'hr-ld',
+    label: 'L&D / HR',
+    title: 'Từ nhu cầu đào tạo đến đầu ra nhìn thấy được.',
+    text: 'Không cần bắt đầu bằng một nền tảng đắt tiền. Hãy bắt đầu bằng cấu trúc đúng và một bộ nội dung có thể vận hành.',
+    points: ['Chuẩn hóa tri thức của đội ngũ', 'Theo dõi chất lượng qua quiz và workbook', 'Tạo thư viện học tập sống cho doanh nghiệp'],
+    image: '/images/v2/laptop.jpg',
+  },
+  {
+    id: 'giang-vien',
+    label: 'Giảng viên tự do',
+    title: 'Một buổi dạy hay nên sống lâu hơn một buổi dạy.',
+    text: 'Giữ lại năng lượng đứng lớp, nhưng tạo thêm tài sản số để người học có thể quay lại, thực hành và giới thiệu bạn.',
+    points: ['Tạo chương trình có thể bán nhiều lần', 'Nói rõ giá trị trước khi mở lớp', 'Bắt đầu từ nội dung bạn đã dạy tốt'],
+    image: '/images/v2/speaking.jpg',
+  },
+];
+
+const chapters = [
+  ['01', 'Định vị vai trò người đóng gói', 'Từ "tôi biết" đến "người khác làm được" — xác định đúng người học, bối cảnh và chuyển hóa cần tạo ra.', 'Bản định vị bài học'],
+  ['02', 'Giải phẫu tri thức ngầm', 'Khai thác kinh nghiệm thành nguyên tắc, tiêu chuẩn và ví dụ có thể truyền lại.', 'Bản đồ tri thức'],
+  ['03', 'Thiết kế cấu trúc học', 'Dựng tuyến nội dung logic: từ mục tiêu, hoạt động đến kiểm tra và ứng dụng.', 'Outline chi tiết'],
+  ['04', 'Viết kịch bản dễ hiểu', 'Biến insight chuyên môn thành lời dẫn, câu chuyện và chỉ dẫn để người học muốn làm theo.', 'Kịch bản video'],
+  ['05', 'Làm slide mang dấu ấn', 'Tạo bộ slide có nhận diện, rõ nhịp, hỗ trợ việc nói — không phải trang trí cho có.', 'Slide thương hiệu'],
+  ['06', 'Đo lường việc đã học', 'Thiết kế quiz tự chấm và bài tập để nhìn thấy người học đã thay đổi ở đâu.', 'Quiz auto-grade'],
+  ['07', 'Đóng gói để vận hành', 'Hoàn thiện lesson plan Excel, workbook và hệ thống lưu trữ để khóa học sống sau ngày quay.', 'Bộ 5 sản phẩm'],
+];
+
+const deliverables = [
+  ['file-text', 'Outline chi tiết', 'Một bản đồ đủ sâu để bất kỳ chuyên gia cùng lĩnh vực cũng có thể tiếp tục phát triển bài học.'],
+  ['presentation', 'Slide có nhận diện', 'Bộ slide editable có branded cover, nhịp thị giác và khoảng trống cho người học ghi nhớ.'],
+  ['clipboard-check', 'Quiz tự chấm điểm', 'Câu hỏi bám mục tiêu, có đáp án và thang điểm — giảm việc chấm tay, tăng dữ liệu.'],
+  ['table-2', 'Lesson plan Excel', 'Bảng điều phối 41 bài học và hoạt động: ai làm gì, khi nào, với đầu ra nào.'],
+  ['book-open', 'Workbook cho học viên', 'Các trang bài tập giúp người học làm ngay trong lúc học và mang kết quả về công việc.'],
+];
+
+const bonuses = [
+  ['sparkles', 'Bộ prompt khai thác tri thức', 'Không còn ngồi trước trang trắng: 30 prompt gợi đúng câu hỏi để đào kinh nghiệm của bạn.'],
+  ['table-2', 'Template lesson plan', 'Mở file là điền: mục tiêu, thời lượng, hoạt động và minh chứng đầu ra nằm cùng một chỗ.'],
+  ['presentation', 'Mẫu slide MAVA', '3 bố cục nền để bạn tập trung vào nội dung, không mất nửa ngày căn chỉnh.'],
+];
+
+const faqs = [
+  ['Tôi không biết quay video có học được không?', 'Có. Khóa học tập trung vào việc thiết kế và đóng gói tri thức trước khi quay. Bạn sẽ biết nội dung nào cần nói, nói cho ai và kiểm tra ra sao. Phần ghi hình có thể thực hiện bằng công cụ bạn đang có.'],
+  ['Tôi có cần giỏi công nghệ hoặc AI không?', 'Không. Bạn cần hiểu lĩnh vực của mình và sẵn sàng làm bài tập. Công cụ được chọn chỉ để rút ngắn thao tác, không thay thế kinh nghiệm của bạn.'],
+  ['Khóa học phù hợp với doanh nghiệp như thế nào?', 'Doanh nghiệp có thể mua theo nhóm để cùng xây một thư viện tri thức nội bộ. MAVA hỗ trợ tư vấn phạm vi, số lượng người học và lộ trình triển khai riêng.'],
+  ['Tôi nhận được gì sau khi hoàn thành?', 'Bạn hoàn thiện Bộ 5 sản phẩm gồm outline, slide editable, quiz tự chấm, lesson plan Excel và workbook — đi kèm đầu ra thực tế ở mỗi chương.'],
+  ['Thời hạn học và hỗ trợ ra sao?', 'Bạn nên hoàn thành trong 7–14 ngày, với khoảng 3,6 giờ video và 2 giờ thực hành. Sau khi đăng ký, đội ngũ MAVA sẽ hướng dẫn bạn bắt đầu đúng nhịp.'],
+];
+
+const individual = ['Trọn bộ 7 chương / 41 bài học', 'Bộ 5 sản phẩm editable', '3 bonus template thực hành', 'Học theo nhịp 7–14 ngày', 'Hỗ trợ bắt đầu qua email'];
+const business = ['Gói triển khai cho đội ngũ', 'Tư vấn phạm vi theo nhu cầu', 'Bộ tài liệu dùng chung nội bộ', 'Theo dõi tiến độ và đầu ra', 'Trao đổi cùng chuyên gia MAVA'];
+
+const clients = ['F88', 'Nhất Tín Logistics', 'Vicoaching', 'ĐHQG Hà Nội', 'ĐH Công nghiệp', 'Học viện Nông nghiệp', 'Appota', 'Takeprofit', 'Flannels Luxury Group'];
+---
+
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="mava-page grain">
+      <div class="top-strip"><span>Chương trình mới của MAVA · <strong>Bộ 5 sản phẩm sau 7–14 ngày</strong></span></div>
+
+      <header class="nav-shell">
+        <div class="container-mava nav-inner">
+          <a href="#dau-trang" aria-label="MAVA trang chủ"><img src="/images/v2/logo.png" alt="MAVA" class="brand-logo" width="82" height="48" /></a>
+          <nav class="nav-links" id="nav-links" aria-label="Điều hướng chính">
+            {navItems.map(([label, id]) => <a href={`#${id}`}>{label}</a>)}
+          </nav>
+          <button class="nav-cta" data-scroll-to="dang-ky" type="button">
+            Nhận tư vấn
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+          <button class="mobile-menu" id="mobile-menu-btn" aria-label="Mở menu" type="button">
+            <svg class="icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
+            <svg class="icon-x" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <!-- Hero -->
+        <section class="hero" id="dau-trang">
+          <div class="container-mava hero-grid">
+            <div class="hero-copy reveal">
+              <span class="eyebrow">Kỹ năng Đóng gói Tri thức · MAVA</span>
+              <h1 class="display-title">Biến điều bạn <em>biết rõ</em> thành điều người khác làm được.</h1>
+              <p>Khóa học thực hành dành cho những chuyên gia Việt Nam muốn biến kinh nghiệm sống thành một hệ thống tri thức có thể học, dùng và nhân rộng.</p>
+              <div class="hero-actions">
+                <button class="button-primary button-yellow" data-scroll-to="dang-ky" type="button">
+                  Bắt đầu đóng gói
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+                <a class="button-ghost" href="#lo-trinh">Xem lộ trình</a>
+              </div>
+              <p class="hero-notes"><span><i></i> 7 chương · 41 bài học</span><span><i></i> 3,6 giờ video</span><span><i></i> 2 giờ thực hành</span></p>
+            </div>
+            <div class="hero-visual reveal delay-2">
+              <div class="hero-photo-frame"></div>
+              <img src="/images/v2/hero-portrait.jpg" alt="Nguyễn Anh Việt, người hướng dẫn MAVA" class="hero-photo" width="2000" height="1909" />
+              <div class="hero-yellow"><strong>01</strong><small>Một hệ thống sống cho điều bạn biết.</small>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 7 10 10"/><path d="M17 7v10H7"/></svg>
+              </div>
+              <div class="hero-sticker"><span>MAVA<br />KNOWLEDGE<br />SYSTEM</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="blue-band">
+          <div class="container-mava ticker"><b>●</b><span>THỰC HÀNH</span><b>●</b><span>ĐẦU RA THẬT</span><b>●</b><span>TRI THỨC SỐNG</span><b>●</b><span>KHÔNG CÓ TRANG TRẮNG</span><b>●</b><span>THỰC HÀNH</span></div>
+        </div>
+
+        <!-- Pain -->
+        <section class="section-pad" id="van-de">
+          <div class="container-mava">
+            <div class="section-intro reveal">
+              <div><span class="eyebrow">01 / Nỗi đau quen thuộc</span><h2>Biết nhiều<br /><em>chưa đủ.</em></h2></div>
+              <p>Tri thức chỉ tạo ra giá trị khi nó rời khỏi đầu người chuyên gia, đi vào tay người học và quay trở lại công việc bằng một hành động mới.</p>
+            </div>
+            <ul class="pain-grid reveal delay-1">
+              {pains.map(([number, title, text]) => (
+                <li class="pain-card"><span class="pain-number">{number}</span><h3>{title}</h3><p>{text}</p></li>
+              ))}
+            </ul>
+            <div class="pullquote reveal delay-2">"Đóng gói tri thức không phải biến bạn thành người làm nội dung. Đó là cách bạn làm cho kinh nghiệm của mình có thể tiếp tục tạo giá trị."</div>
+          </div>
+        </section>
+
+        <!-- System -->
+        <section class="section-pad ink-section" id="he-thong">
+          <div class="container-mava">
+            <div class="section-intro light reveal">
+              <div><span class="eyebrow">02 / Cách MAVA nhìn tri thức</span><h2>Không làm một khóa học.<br /><em>Xây một hệ thống.</em></h2></div>
+              <p>Thứ bạn mang về không chỉ là một thư mục file. Đó là hệ thống có cấu trúc để cập nhật, truyền lại và đo lường.</p>
+            </div>
+            <div class="system-wrap">
+              <div class="system-diagram reveal">
+                <div class="system-dot one">Kinh nghiệm<br />ngầm</div>
+                <div class="system-dot two">Cấu trúc<br />học</div>
+                <div class="system-dot three">Thực hành<br />thật</div>
+                <div class="system-dot four">Dữ liệu<br />phản hồi</div>
+                <div class="system-core">LIVING<br />KNOWLEDGE<br />SYSTEM</div>
+              </div>
+              <div class="system-copy reveal delay-1">
+                <span class="eyebrow">Một vòng lặp có thể sống</span>
+                <h2>Từ hiểu biết<br />đến hành vi.</h2>
+                <p>MAVA đi cùng bạn qua đúng những điểm thường bị bỏ qua: khai thác tri thức ngầm, thiết kế trải nghiệm học, tạo đầu ra và đặt nó vào một vòng lặp cải tiến.</p>
+                <ul class="check-list">
+                  <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Mỗi chương kết thúc bằng một sản phẩm thật, không phải một bài quiz để hoàn thành cho xong.</li>
+                  <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Mỗi sản phẩm kết nối với sản phẩm tiếp theo, để bạn không bị rơi vào "hố công cụ".</li>
+                  <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Học theo nhịp 7–14 ngày, đủ ngắn để bắt đầu, đủ sâu để làm ra.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Audience -->
+        <section class="section-pad" id="doi-tuong">
+          <div class="container-mava">
+            <div class="section-intro reveal">
+              <div><span class="eyebrow">03 / Dành cho ai</span><h2>Đúng người,<br /><em>đúng đầu ra.</em></h2></div>
+              <p>Một phương pháp tốt phải chạm vào công việc thật. Chọn vị trí của bạn để xem cách Bộ 5 sản phẩm tạo khác biệt.</p>
+            </div>
+            <div class="audience-tabs reveal delay-1" id="audience-tabs">
+              {audiences.map((item, index) => (
+                <button class={`audience-tab ${index === 0 ? 'active' : ''}`} data-audience={item.id} type="button">{item.label}</button>
+              ))}
+            </div>
+            <div class="reveal delay-2" id="audience-panels">
+              {audiences.map((item, index) => (
+                <div class={`audience-panel audience-view ${index === 0 ? 'active' : ''}`} data-audience-panel={item.id}>
+                  <img src={item.image} alt={item.label} />
+                  <div class="audience-content">
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                    <ul>{item.points.map((point) => <li>{point}</li>)}</ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section class="section-pad roadmap" id="lo-trinh">
+          <div class="container-mava">
+            <div class="section-intro reveal">
+              <div><span class="eyebrow">04 / Lộ trình 7 chương</span><h2>Học xong<br /><em>có thứ để dùng.</em></h2></div>
+              <p>Khoảng 3,6 giờ video, 2 giờ thực hành, chia thành 7 chặng ngắn. Mỗi chặng khép lại bằng một mảnh ghép của hệ thống.</p>
+            </div>
+            <ul class="roadmap-grid reveal delay-1">
+              {chapters.map(([number, chTitle, text, output]) => (
+                <li class="chapter"><span class="chapter-index">{number}</span><div><h3>{chTitle}</h3><p>{text}</p><span class="chapter-output">{output}</span></div></li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <!-- Deliverables -->
+        <section class="section-pad deliverables" id="san-pham">
+          <div class="container-mava">
+            <div class="section-intro light reveal">
+              <div><span class="eyebrow">05 / Kết quả cầm trên tay</span><h2>Bộ 5 sản phẩm<br /><em>của riêng bạn.</em></h2></div>
+              <p>Bạn không kết thúc bằng cảm giác "đã học". Bạn kết thúc bằng một bộ hồ sơ có thể tiếp tục chỉnh sửa, chia sẻ và triển khai.</p>
+            </div>
+            <div class="deliverables-grid">
+              <ul class="deliverable-list reveal">
+                {deliverables.map(([, dTitle, dText], index) => (
+                  <li class="deliverable"><span class="deliverable-number">0{index + 1}</span><div><h3>{dTitle}</h3><p>{dText}</p></div></li>
+                ))}
+              </ul>
+              <div class="deliverable-board reveal delay-1">
+                <div class="board-top"><span>MAVA / OUTPUT BOARD</span><span>v.01</span></div>
+                <div class="board-lines">
+                  {deliverables.map(([, dTitle], index) => (
+                    <div class="board-line"><span>{dTitle}</span><span>{String(index + 1).padStart(2, '0')} / 05</span></div>
+                  ))}
+                </div>
+                <span class="board-stamp">READY TO SHARE</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bonus -->
+        <section class="section-pad" id="bonus">
+          <div class="container-mava">
+            <div class="section-intro reveal">
+              <div><span class="eyebrow">06 / Tặng thêm để bắt tay vào làm</span><h2>Những mảnh ghép<br /><em>nhỏ nhưng đáng giá.</em></h2></div>
+              <p>Bởi vì đôi khi điều khiến bạn trì hoãn không phải thiếu kiến thức — mà là không biết mở file nào trước.</p>
+            </div>
+            <ul class="bonus-grid reveal delay-1">
+              {bonuses.map(([icon, bTitle, bText]) => (
+                <li class="bonus-card">
+                  {icon === 'sparkles' && <svg class="bonus-icon" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></svg>}
+                  {icon === 'table-2' && <svg class="bonus-icon" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18"/><path d="M9 3v18"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>}
+                  {icon === 'presentation' && <svg class="bonus-icon" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/></svg>}
+                  <h3>{bTitle}</h3><p>{bText}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <!-- Compare -->
+        <section class="section-pad compare">
+          <div class="container-mava">
+            <div class="section-intro reveal">
+              <div><span class="eyebrow">07 / Một thay đổi nhìn thấy được</span><h2>Trước và<br /><em>sau khi đóng gói.</em></h2></div>
+              <p>Không phải làm nhiều hơn. Là làm đúng thứ tạo ra khả năng lặp lại.</p>
+            </div>
+            <div class="compare-grid reveal delay-1">
+              <div class="compare-col">
+                <h3>Trước đây</h3>
+                <ul>
+                  <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> Nội dung nằm rải rác trong slide, chat và trí nhớ.</li>
+                  <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> Mỗi người mới cần một phiên "cầm tay chỉ việc".</li>
+                  <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> Không biết người học đã hiểu đến đâu.</li>
+                  <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> Làm xong một lần rồi lại bắt đầu từ đầu.</li>
+                </ul>
+              </div>
+              <div class="compare-col">
+                <h3>Sau khóa học</h3>
+                <ul>
+                  <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Một outline rõ để cập nhật và giao cho người khác.</li>
+                  <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Slide, workbook và lesson plan cùng nói một ngôn ngữ.</li>
+                  <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Quiz tự chấm cho bạn dữ liệu phản hồi.</li>
+                  <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Hệ thống có thể sống tiếp sau ngày bạn đứng lớp.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Trainer -->
+        <section class="section-pad" id="nguoi-huong-dan">
+          <div class="container-mava trainer-grid">
+            <div class="trainer-image-wrap reveal">
+              <img src="/images/v2/trainer-stage.jpg" alt="Nguyễn Anh Việt đang đào tạo" class="trainer-image" width="1080" height="1080" />
+            </div>
+            <div class="trainer-copy reveal delay-1">
+              <span class="eyebrow">08 / Người đứng sau phương pháp</span>
+              <h2>Nguyễn<br /><em>Anh Việt.</em></h2>
+              <p>COO MAVA Company · NLP Master Coach. Hơn 6 năm làm đào tạo và phát triển con người, đồng hành cùng những đội ngũ cần biến năng lực thành cách làm chung.</p>
+              <div class="trainer-stats">
+                <div class="trainer-stat"><strong>6+</strong><span>năm trong đào tạo & phát triển con người</span></div>
+                <div class="trainer-stat"><strong>6.000+</strong><span>học viên đã được đào tạo</span></div>
+                <div class="trainer-stat"><strong>41</strong><span>bài học và hoạt động thực hành</span></div>
+              </div>
+              <div class="quote-box">"Tôi không muốn bạn học cách làm thêm một khóa học. Tôi muốn bạn biết cách làm cho tri thức của mình không thất lạc."</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Proof -->
+        <section class="section-pad proof-section">
+          <div class="container-mava">
+            <div class="proof-layout">
+              <div class="reveal">
+                <img src="/images/v2/team.jpg" alt="Một buổi đào tạo của MAVA" class="proof-photo" width="2000" height="1500" />
+                <div class="gallery">
+                  <img src="/images/v2/team-two.jpg" alt="Đội ngũ học viên MAVA" width="2000" height="1500" />
+                  <img src="/images/v2/classroom.jpg" alt="Lớp học MAVA" width="2000" height="1500" />
+                  <img src="/images/v2/lesson.jpg" alt="Học viên thực hành trên máy tính" width="1926" height="2568" />
+                </div>
+              </div>
+              <div class="proof-copy reveal delay-1">
+                <span class="eyebrow">09 / Đã được tin chọn trong phòng học thật</span>
+                <h2>Tri thức này không nằm trên lý thuyết.</h2>
+                <p>MAVA đã đi qua nhiều phòng họp, lớp học và những bài toán vận hành thật của doanh nghiệp Việt. Phương pháp được xây từ những lần cùng chuyên gia gỡ rối: họ biết rất nhiều, nhưng cần một cách để truyền lại.</p>
+                <div class="client-cloud">{clients.map((client) => <span class="client-pill">{client}</span>)}</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pricing -->
+        <section class="section-pad pricing-section" id="hoc-phi">
+          <div class="container-mava">
+            <div class="section-intro reveal">
+              <div><span class="eyebrow">10 / Chọn cách bắt đầu</span><h2>Một người làm.<br /><em>Cả đội cùng làm.</em></h2></div>
+              <p>Bạn có thể bắt đầu từ chính tri thức của mình hoặc mở ra một dự án tri thức chung cho doanh nghiệp.</p>
+            </div>
+            <div class="pricing-grid reveal delay-1">
+              <article class="price-card featured">
+                <h3>Cá nhân thực chiến</h3>
+                <p>Dành cho chuyên gia, giảng viên, L&D muốn hoàn thiện một sản phẩm tri thức đầu tiên.</p>
+                <div class="price"><strong>1.490.000</strong><span>VNĐ</span></div>
+                <ul>{individual.map((item) => <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> {item}</li>)}</ul>
+                <button class="button-primary button-yellow" data-scroll-to="dang-ky" type="button">
+                  Đăng ký khóa học
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+              </article>
+              <article class="price-card">
+                <h3>Doanh nghiệp / đội ngũ</h3>
+                <p>Dành cho HR, L&D và quản lý muốn chuẩn hóa tri thức từ những người giỏi nhất.</p>
+                <div class="price"><strong>Trao đổi</strong><span>theo quy mô</span></div>
+                <ul>{business.map((item) => <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> {item}</li>)}</ul>
+                <button class="button-ghost" data-scroll-to="dang-ky" type="button">
+                  Nhận tư vấn cho đội ngũ
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+              </article>
+            </div>
+            <p class="price-note">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:5px"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+              Thông tin đăng ký được bảo mật. Không spam, không gọi làm phiền.
+            </p>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section-pad" id="faq">
+          <div class="container-mava faq-grid">
+            <div class="reveal">
+              <span class="eyebrow">11 / Câu hỏi thường gặp</span>
+              <h2>Cứ hỏi<br /><em>thẳng.</em></h2>
+              <p>Nếu bạn chưa thấy câu trả lời, để lại thông tin ở phần cuối. Đội ngũ MAVA sẽ trao đổi đúng điều bạn cần, không gửi một kịch bản bán hàng chung chung.</p>
+            </div>
+            <div class="faq-list reveal delay-1" id="faq-list">
+              {faqs.map(([question, answer], index) => (
+                <div class="faq-item" data-faq-index={index}>
+                  <button class="faq-question" type="button" aria-expanded="false">
+                    <span>{question}</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                  </button>
+                  <div class="faq-answer">{answer}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="section-pad cta-section" id="dang-ky">
+          <div class="container-mava cta-grid">
+            <div class="cta-copy reveal">
+              <span class="eyebrow">12 / Bước tiếp theo là của bạn</span>
+              <h2>Đừng để tri thức của bạn <em>thất lạc.</em></h2>
+              <p>Trong 24 giờ tới, hãy dành một khoảng nhỏ để nhìn lại điều bạn biết rõ nhất. MAVA sẽ giúp bạn biến nó thành một hệ thống có thể sống tiếp.</p>
+              <div class="countdown" id="countdown">
+                <div class="countdown-unit"><strong id="countdown-hours">24</strong><span>giờ</span></div>
+                <div class="countdown-unit"><strong id="countdown-minutes">00</strong><span>phút</span></div>
+                <div class="countdown-unit"><strong id="countdown-seconds">00</strong><span>giây</span></div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;margin-top:27px;color:rgba(246,243,235,.58);font-size:11px">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6h4"/></svg>
+                Ưu đãi tư vấn đầu vào hiển thị trong 24 giờ
+              </div>
+            </div>
+
+            <div class="form-card reveal delay-1">
+              <div id="registration-form-wrap">
+                <h3>Để lại một lời chào.</h3>
+                <p>Nhận lộ trình phù hợp với vai trò của bạn và lịch khai giảng gần nhất từ MAVA.</p>
+                <form class="form-fields" id="registration-form">
+                  <div class="form-field"><label for="name">Họ và tên</label><input id="name" name="name" required placeholder="Nguyễn Văn A" /></div>
+                  <div class="form-field"><label for="phone">Số điện thoại</label><input id="phone" name="phone" required type="tel" placeholder="09xx xxx xxx" /></div>
+                  <div class="form-field"><label for="email">Email</label><input id="email" name="email" required type="email" placeholder="ten@congty.vn" /></div>
+                  <button class="button-primary" type="submit">
+                    Gửi thông tin
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </button>
+                </form>
+                <div class="form-trust">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="16" r="1"/><rect x="3" y="10" width="18" height="12" rx="2"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/></svg>
+                  Thông tin của bạn chỉ được dùng để tư vấn khóa học. MAVA tôn trọng quyền riêng tư của bạn.
+                </div>
+              </div>
+              <div class="success-state" id="registration-success" style="display:none">
+                <div class="success-icon"><svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="#1d2c3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg></div>
+                <h3>Đã nhận lời chào.</h3>
+                <p id="registration-success-text">Cảm ơn bạn. MAVA sẽ liên hệ với bạn trong giờ làm việc gần nhất để cùng chọn bước bắt đầu phù hợp.</p>
+                <button class="button-ghost" id="registration-reset" type="button">Gửi thông tin khác</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="container-mava footer-inner">
+          <img src="/images/v2/logo.png" alt="MAVA" />
+          <span>MAVA · Biến tri thức thành năng lực có thể nhân rộng.</span>
+          <div class="footer-links"><a href="#faq">FAQ</a><a href="#dang-ky">Đăng ký</a><a href="#dau-trang">Về đầu trang</a></div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      function scrollToId(id: string) {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      document.querySelectorAll('[data-scroll-to]').forEach((el) => {
+        el.addEventListener('click', () => {
+          const id = el.getAttribute('data-scroll-to');
+          if (id) scrollToId(id);
+        });
+      });
+
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const navLinks = document.getElementById('nav-links');
+      mobileMenuBtn?.addEventListener('click', () => {
+        navLinks?.classList.toggle('open');
+        mobileMenuBtn.classList.toggle('open');
+      });
+      navLinks?.querySelectorAll('a').forEach((a) => {
+        a.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+          mobileMenuBtn?.classList.remove('open');
+        });
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add('is-visible')),
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+
+      let seconds = 24 * 60 * 60;
+      const hoursEl = document.getElementById('countdown-hours');
+      const minutesEl = document.getElementById('countdown-minutes');
+      const secondsEl = document.getElementById('countdown-seconds');
+      function renderCountdown() {
+        const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+        const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+        const s = String(seconds % 60).padStart(2, '0');
+        if (hoursEl) hoursEl.textContent = h;
+        if (minutesEl) minutesEl.textContent = m;
+        if (secondsEl) secondsEl.textContent = s;
+      }
+      renderCountdown();
+      setInterval(() => {
+        seconds = seconds > 0 ? seconds - 1 : 24 * 60 * 60;
+        renderCountdown();
+      }, 1000);
+
+      const audienceTabs = document.getElementById('audience-tabs');
+      audienceTabs?.querySelectorAll('.audience-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const id = tab.getAttribute('data-audience');
+          audienceTabs.querySelectorAll('.audience-tab').forEach((t) => t.classList.remove('active'));
+          tab.classList.add('active');
+          document.querySelectorAll('.audience-view').forEach((panel) => {
+            panel.classList.toggle('active', panel.getAttribute('data-audience-panel') === id);
+          });
+        });
+      });
+
+      document.getElementById('faq-list')?.querySelectorAll('.faq-item').forEach((item) => {
+        const question = item.querySelector('.faq-question');
+        question?.addEventListener('click', () => {
+          const isOpen = item.classList.contains('open');
+          document.querySelectorAll('#faq-list .faq-item').forEach((el) => {
+            el.classList.remove('open');
+            el.querySelector('.faq-question')?.setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            item.classList.add('open');
+            question.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+
+      const form = document.getElementById('registration-form') as HTMLFormElement | null;
+      const formWrap = document.getElementById('registration-form-wrap');
+      const successState = document.getElementById('registration-success');
+      const successText = document.getElementById('registration-success-text');
+      form?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const nameInput = form.querySelector<HTMLInputElement>('#name');
+        const name = nameInput?.value.trim() ?? '';
+        if (formWrap) formWrap.style.display = 'none';
+        if (successState) successState.style.display = 'block';
+        if (successText) successText.textContent = `Cảm ơn ${name}. MAVA sẽ liên hệ với bạn trong giờ làm việc gần nhất để cùng chọn bước bắt đầu phù hợp.`;
+      });
+      document.getElementById('registration-reset')?.addEventListener('click', () => {
+        form?.reset();
+        if (successState) successState.style.display = 'none';
+        if (formWrap) formWrap.style.display = 'block';
+      });
+    </script>
+  </body>
+</html>
