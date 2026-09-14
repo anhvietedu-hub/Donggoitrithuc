@@ -478,10 +478,6 @@ const nav = [
                     Email
                     <input type="email" name="email" autocomplete="email" placeholder="ban@congty.com" required />
                   </label>
-                  <label class="field">
-                    Đơn vị và vai trò
-                    <input type="text" name="org" autocomplete="organization" placeholder="Trưởng phòng Đào tạo, Công ty ABC" />
-                  </label>
 
                   <button type="submit" class="btn btn-beam btn-wide">Đăng ký học ngay</button>
                   <!-- Ô này để trống, chỉ hiện chữ khi script báo lỗi nhập liệu
@@ -610,7 +606,6 @@ const nav = [
           data.append(fields.name, el.name.value.trim());
           data.append(fields.phone, el.phone.value.trim());
           data.append(fields.email, el.email.value.trim());
-          data.append(fields.org, el.org.value.trim());
 
           try {
             await fetch('https://docs.google.com/forms/d/e/' + formId + '/formResponse', {

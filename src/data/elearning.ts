@@ -28,7 +28,6 @@ export const registerForm = {
     name: 'entry.000000001',
     phone: 'entry.000000002',
     email: 'entry.000000003',
-    org: 'entry.000000004',
   },
 };
 
