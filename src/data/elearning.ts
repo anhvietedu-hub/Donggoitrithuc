@@ -308,17 +308,18 @@ export const gifts = [
   },
 ];
 
+// icon: tên icon trong ElearningPage.astro (fitIcons).
 export const audienceFit = [
-  'Bạn là Trainer, Coach, giảng viên nội bộ cần chuẩn hoá giáo án và tiết kiệm thời gian soạn bài.',
-  'Bạn là Quản lý cấp trung, Trưởng bộ phận đang mất quá nhiều thời gian kèm cặp, đào tạo lặp lại cho nhân sự mới.',
-  'Bạn làm HR hoặc L&D và cần xây thư viện tài liệu đào tạo bài bản, tái sử dụng được.',
-  'Bạn là chuyên gia nắm giữ bí kíp chuyên môn, muốn để lại di sản kiến thức thay vì mang theo khi rời đi.',
-  'Bạn đã thử dùng AI để soạn tài liệu nhưng kết quả ra chung chung, chưa dùng được vào lớp thật.',
+  { icon: 'trainer', text: 'Bạn là Trainer, Coach, giảng viên nội bộ cần chuẩn hoá giáo án và tiết kiệm thời gian soạn bài.' },
+  { icon: 'manager', text: 'Bạn là Quản lý cấp trung, Trưởng bộ phận đang mất quá nhiều thời gian kèm cặp, đào tạo lặp lại cho nhân sự mới.' },
+  { icon: 'library', text: 'Bạn làm HR hoặc L&D và cần xây thư viện tài liệu đào tạo bài bản, tái sử dụng được.' },
+  { icon: 'expert', text: 'Bạn là chuyên gia nắm giữ bí kíp chuyên môn, muốn để lại di sản kiến thức thay vì mang theo khi rời đi.' },
+  { icon: 'ai', text: 'Bạn đã thử dùng AI để soạn tài liệu nhưng kết quả ra chung chung, chưa dùng được vào lớp thật.' },
 ];
 
 export const audienceMisfit = [
-  'Bạn muốn có sẵn tài liệu để dùng luôn, chứ không muốn tự tay làm ra sản phẩm của mình.',
-  'Bạn chưa có kinh nghiệm chuyên môn nào để đóng gói. Khoá học giúp hệ thống hoá cái bạn đã có, không tạo ra chuyên môn thay bạn.',
+  { icon: 'ready', text: 'Bạn muốn có sẵn tài liệu để dùng luôn, chứ không muốn tự tay làm ra sản phẩm của mình.' },
+  { icon: 'noexp', text: 'Bạn chưa có kinh nghiệm chuyên môn nào để đóng gói. Khoá học giúp hệ thống hoá cái bạn đã có, không tạo ra chuyên môn thay bạn.' },
 ];
 
 // Video cảm nhận học viên trên kênh YouTube MAVA TRAINING.
