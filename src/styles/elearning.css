@@ -523,8 +523,11 @@ h3 {
 }
 
 .vs-col li {
-  position: relative;
-  padding: 15px 0 15px 20px;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 12px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 15.5px;
   line-height: 1.5;
@@ -534,22 +537,65 @@ h3 {
   border-top-color: var(--line);
 }
 
-.vs-col li::before {
-  content: '';
+.vs-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.vs-top .vs-head {
+  margin-bottom: 0;
+}
+
+.vs-art {
+  width: 56px;
+  height: 56px;
+  flex: none;
+}
+
+.vs-ico {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+}
+
+.vs-ico svg {
+  width: 19px;
+  height: 19px;
+}
+
+.vs-no .vs-ico {
+  background: var(--paper);
+  color: #8a97a8;
+}
+
+.vs-yes .vs-ico {
+  background: rgba(255, 206, 31, 0.14);
+  color: var(--beam);
+}
+
+/* Mũi tên tròn nằm giữa hai cột: từ hiện trạng sang kết quả. */
+.vs {
+  position: relative;
+}
+
+.vs-arrow {
   position: absolute;
-  left: 0;
-  top: 24px;
-  width: 7px;
-  height: 7px;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  display: grid;
+  place-items: center;
   border-radius: 50%;
-}
-
-.vs-yes li::before {
   background: var(--beam);
-}
-
-.vs-no li::before {
-  border: 1.5px solid var(--line);
+  color: var(--ink);
+  box-shadow: 0 0 0 5px var(--paper);
 }
 
 /* ---------- thư viện ảnh lớp học ---------- */
@@ -1444,6 +1490,19 @@ h3 {
   .vs,
   .fit {
     gap: 14px;
+  }
+
+  /* Hai cột xếp chồng thì mũi tên chỉ xuống, nằm giữa hai khối. */
+  .vs-arrow {
+    position: relative;
+    left: auto;
+    top: auto;
+    justify-self: center;
+    margin: -22px 0;
+  }
+
+  .vs-arrow svg {
+    transform: rotate(90deg);
   }
 
   .pain-close {

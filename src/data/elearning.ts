@@ -106,24 +106,35 @@ export const whyNow = [
   },
 ];
 
+// packedIcon / unpackedIcon: tên icon trong ElearningPage.astro (compareIcons).
 export const comparison = [
   {
+    packedIcon: 'fast',
+    unpackedIcon: 'slow',
     packed: '30 phút có bộ tài liệu đem vào lớp dùng ngay',
     unpacked: 'Vài ngày, vài tuần vẫn chưa xong một bộ giáo án',
   },
   {
+    packedIcon: 'teach',
+    unpackedIcon: 'talk',
     packed: 'Đứng lớp tự tin với slide, bộ đề, lesson plan đầy đủ',
     unpacked: 'Nói chay, phụ thuộc trí nhớ, hay cháy giáo án',
   },
   {
+    packedIcon: 'asset',
+    unpackedIcon: 'relay',
     packed: 'Kinh nghiệm thành tài sản, chuyển giao được cho người sau',
     unpacked: 'Kinh nghiệm chỉ nằm trong đầu, nghỉ việc là mất trắng',
   },
   {
+    packedIcon: 'grow',
+    unpackedIcon: 'empty',
     packed: 'Nhận thêm cơ hội đào tạo, coaching, xây khoá học',
     unpacked: 'Giỏi nhưng không có sản phẩm nào để chứng minh',
   },
   {
+    packedIcon: 'loop',
+    unpackedIcon: 'trash',
     packed: 'Tài liệu sống, cập nhật liên tục theo thực tế',
     unpacked: 'Tài liệu cũ kỹ, dùng một lần rồi bỏ xó',
   },
