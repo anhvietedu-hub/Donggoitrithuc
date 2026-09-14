@@ -484,6 +484,25 @@ h3 {
 
 /* ---------- bảng so sánh ---------- */
 
+/* Câu dẫn dưới tiêu đề so sánh: nhỏ hơn tiêu đề, đậm và có nền vàng như bút dạ quang. */
+.vs-lede {
+  margin-top: 18px;
+  max-width: 64ch;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(18px, 2.2vw, 23px);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.vs-lede mark {
+  color: inherit;
+  background: linear-gradient(transparent 55%, rgba(255, 206, 31, 0.75) 55%);
+  padding: 0 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 .vs {
   margin-top: 44px;
   display: grid;
