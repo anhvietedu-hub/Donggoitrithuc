@@ -5,7 +5,7 @@ export const course = {
   label: 'Khoá học online',
   title: 'Kỹ năng Đóng gói Tri thức',
   promise:
-    'Biến kiến thức, kinh nghiệm trong đầu bạn thành bộ tài liệu đào tạo chuẩn hoá với sự hỗ trợ AI chỉ trong 15 đến 30 phút',
+    'Biến kiến thức, kinh nghiệm trong đầu bạn thành bộ tài liệu đào tạo nhờ dây chuyền Đóng gói 5 Lớp với sự hỗ trợ AI chỉ trong 30 phút',
   lede:
     'Bộ công thức giúp Trainer, Quản lý và chuyên gia nội bộ tự tay sản xuất trọn bộ 5 tài liệu đào tạo mà không cần biết viết lách, không cần biết thiết kế.',
   cadence: 'Mỗi ngày 30 phút. Sau 7 ngày bạn có bộ tài liệu đào tạo đầu tiên của riêng mình.',
