@@ -1171,6 +1171,11 @@ h3 {
   backdrop-filter: blur(4px);
 }
 
+/* display: grid ở trên đè mất thuộc tính hidden của trình duyệt, phải ẩn lại tường minh. */
+.wait[hidden] {
+  display: none;
+}
+
 .wait-card {
   width: min(420px, 100%);
   padding: 34px 28px 30px;
