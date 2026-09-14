@@ -306,10 +306,8 @@ export const audienceFit = [
 ];
 
 export const audienceMisfit = [
-  'Bạn chỉ muốn tìm mẹo nhanh thay vì học một quy trình đóng gói bài bản.',
   'Bạn muốn có sẵn tài liệu để dùng luôn, chứ không muốn tự tay làm ra sản phẩm của mình.',
   'Bạn chưa có kinh nghiệm chuyên môn nào để đóng gói. Khoá học giúp hệ thống hoá cái bạn đã có, không tạo ra chuyên môn thay bạn.',
-  'Bạn kỳ vọng xong trong một đêm mà không cần thực hành. Mỗi phần đều yêu cầu bạn bắt tay làm thật.',
 ];
 
 // Video cảm nhận học viên trên kênh YouTube MAVA TRAINING.
