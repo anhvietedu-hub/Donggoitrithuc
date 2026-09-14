@@ -73,13 +73,14 @@ export const deliverables = [
   { ext: 'DOCX', name: 'Sổ tay học viên', note: 'Workbook phát cho lớp, sẵn sàng tổ chức buổi đào tạo' },
 ];
 
+// icon: tên hình vẽ nhỏ đứng trước mỗi ý, khai báo trong ElearningPage.astro (painIcons).
 export const pains = [
-  'Sếp giao chuẩn bị tài liệu đào tạo cho team. Bạn ngồi trước file trắng cả buổi, không biết bắt đầu từ đâu.',
-  'Bạn dạy rất hay, nhưng toàn nói chay. Học viên nghe xong về là quên, không có gì để tra cứu lại.',
-  'Kinh nghiệm 5 đến 10 năm của bạn đang nằm trong đầu, truyền miệng cho người sau, đến đời thứ ba thì tam sao thất bản.',
-  'Soạn một bộ giáo án tử tế mất vài ngày đến vài tuần, trong khi bạn còn cả núi việc chuyên môn.',
-  'Bạn đã thử dùng AI, nhưng kết quả ra chung chung, sáo rỗng, không dùng được vào lớp học thật.',
-  'Bạn mắc bẫy cầu toàn: chỉnh đi chỉnh lại mãi mà tài liệu vẫn chưa bao giờ xong để đem ra dùng.',
+  { icon: 'blank', text: 'Sếp giao chuẩn bị tài liệu đào tạo cho team. Bạn ngồi trước file trắng cả buổi, không biết bắt đầu từ đâu.' },
+  { icon: 'talk', text: 'Bạn dạy rất hay, nhưng toàn nói chay. Học viên nghe xong về là quên, không có gì để tra cứu lại.' },
+  { icon: 'relay', text: 'Kinh nghiệm 5 đến 10 năm của bạn đang nằm trong đầu, truyền miệng cho người sau, đến đời thứ ba thì tam sao thất bản.' },
+  { icon: 'time', text: 'Soạn một bộ giáo án tử tế mất vài ngày đến vài tuần, trong khi bạn còn cả núi việc chuyên môn.' },
+  { icon: 'ai', text: 'Bạn đã thử dùng AI, nhưng kết quả ra chung chung, sáo rỗng, không dùng được vào lớp học thật.' },
+  { icon: 'loop', text: 'Bạn mắc bẫy cầu toàn: chỉnh đi chỉnh lại mãi mà tài liệu vẫn chưa bao giờ xong để đem ra dùng.' },
 ];
 
 export const whyNow = [

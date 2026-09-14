@@ -409,22 +409,45 @@ h3 {
 
 .pain-item {
   background: var(--surface);
-  padding: 26px 28px;
+  padding: 24px 28px;
   font-size: 16px;
   color: var(--slate);
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
 }
 
-.pain-item::before {
-  content: '';
-  display: block;
-  width: 18px;
-  height: 2px;
-  background: var(--sky);
-  margin-bottom: 14px;
+.pain-ico {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--sky-soft);
+  color: #1f6fbf;
+}
+
+.pain-ico svg {
+  width: 23px;
+  height: 23px;
+}
+
+.pain-close {
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px 40px;
+  align-items: center;
+}
+
+.pain-art {
+  width: 300px;
+  max-width: 100%;
+  height: auto;
 }
 
 .pain-turn {
-  margin-top: 34px;
   border-left: 4px solid var(--beam);
   padding: 6px 0 6px 22px;
   font-family: var(--display);
@@ -1421,6 +1444,26 @@ h3 {
   .vs,
   .fit {
     gap: 14px;
+  }
+
+  .pain-close {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pain-art {
+    width: 260px;
+    justify-self: center;
+  }
+
+  .pain-item {
+    padding: 20px 18px;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .pain-ico {
+    width: 40px;
+    height: 40px;
   }
 
   .gal,
