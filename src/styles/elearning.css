@@ -1158,6 +1158,67 @@ h3 {
   font-size: 13px;
 }
 
+/* ---------- thông báo chờ khi gửi đăng ký ---------- */
+
+.wait {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(7, 18, 33, 0.78);
+  backdrop-filter: blur(4px);
+}
+
+.wait-card {
+  width: min(420px, 100%);
+  padding: 34px 28px 30px;
+  border-radius: var(--r-panel);
+  border: 2px solid var(--beam);
+  background: var(--ink);
+  text-align: center;
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
+}
+
+.wait-spin {
+  display: block;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  border: 5px solid rgba(255, 206, 31, 0.22);
+  border-top-color: var(--beam);
+  animation: wait-rot 0.9s linear infinite;
+}
+
+@keyframes wait-rot {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wait-spin {
+    animation-duration: 2.4s;
+  }
+}
+
+.wait-title {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.25;
+  color: var(--beam);
+}
+
+.wait-text {
+  margin-top: 8px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #fff;
+}
+
 /* ---------- thanh CTA cố định trên điện thoại ---------- */
 
 .dock {

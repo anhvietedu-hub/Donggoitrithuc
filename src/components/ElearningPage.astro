@@ -517,6 +517,15 @@ const nav = [
       </div>
     </footer>
 
+    <!-- Hiện trong lúc gửi đăng ký và tạo mã QR, để học viên không tưởng trang bị treo mà bấm lại hoặc thoát. -->
+    <div class="wait" id="reg-wait" role="status" aria-live="polite" hidden>
+      <div class="wait-card">
+        <span class="wait-spin" aria-hidden="true"></span>
+        <p class="wait-title">Vui lòng chờ trong 1-2 phút</p>
+        <p class="wait-text">Chúng tôi đang tạo QR Code thanh toán!</p>
+      </div>
+    </div>
+
     <div class="dock">
       <div class="dock-price">
         <s>{vnd(course.originalPrice)}</s>
@@ -598,6 +607,8 @@ const nav = [
           const btn = form.querySelector('button[type="submit"]');
           btn.disabled = true;
           btn.textContent = 'Đang gửi...';
+          const wait = document.getElementById('reg-wait');
+          if (wait) wait.hidden = false;
 
           // form.name lấy ra thuộc tính của thẻ form, không phải ô nhập liệu.
           const el = form.elements;
@@ -632,6 +643,8 @@ const nav = [
             done.hidden = false;
             done.scrollIntoView({ block: 'center', behavior: 'smooth' });
           } catch (err) {
+            const waitEl = document.getElementById('reg-wait');
+            if (waitEl) waitEl.hidden = true;
             btn.disabled = false;
             btn.textContent = 'Đăng ký học ngay';
             msg.textContent =
