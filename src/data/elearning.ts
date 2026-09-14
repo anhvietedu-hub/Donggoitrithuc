@@ -26,6 +26,35 @@ export const registerForm = {
   endpoint: 'https://script.google.com/macros/s/AKfycbyxiyO50dfNhYHFz7QhHwbqK-tLu9dnh-9ZChqCS9ysJNGiK0tIc6Z5C7XiThlNIKNjHg/exec',
 };
 
+// Trang thanh toán /thanh-toan/. Các ô để trống là thông tin đang chờ khách hàng xác nhận.
+// Chưa điền đủ phần bank thì ready = false: form vẫn hiện lời cảm ơn như cũ,
+// không chuyển học viên sang một trang thanh toán thiếu số tài khoản.
+export const checkout = {
+  bank: {
+    name: 'Ngân hàng Quân Đội (MB Bank)',
+    binKey: 'mbbank',
+    account: '1121888999',
+    holder: 'CÔNG TY CP TVDT VÀ PTNNL MAVA',
+  },
+  // Nội dung chuyển khoản = số điện thoại học viên + hậu tố này.
+  // Cú pháp gốc của MAVA là "SĐT_Donggoi"; dấu gạch dưới được đổi thành dấu cách
+  // vì nhiều ngân hàng lọc bỏ ký tự đặc biệt khỏi nội dung chuyển khoản.
+  transferSuffix: 'Donggoi',
+  // Mô tả thật cách kích hoạt; không hứa "tự động" vì MAVA kích hoạt tay.
+  activation: 'MAVA sẽ liên hệ và kích hoạt tài khoản học cho bạn muộn nhất 24 giờ sau khi nhận được học phí.',
+  zalo: '0968 126 930',
+  facebook: 'https://www.facebook.com/viettrainer/',
+  legal: {
+    company: 'Công ty Cổ phần Tư vấn Đào tạo và Phát triển Nguồn Nhân lực MAVA',
+    taxCode: '0110952026',
+  },
+};
+
+export function checkoutReady() {
+  const b = checkout.bank;
+  return Boolean(b.name && b.binKey && b.account && b.holder && checkout.transferSuffix);
+}
+
 export const contact = {
   hotline: '0968 126 930',
   hotlineTel: '0968126930',

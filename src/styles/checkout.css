@@ -1,0 +1,321 @@
+/* Trang thanh toán /thanh-toan/. Dùng chung token và khung của elearning.css. */
+
+.co-center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Ô còn thiếu thông tin: đỏ rõ để không ai lỡ đưa trang chưa đủ lên mạng. */
+.pending {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: #fde8e8;
+  color: #b42318;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ---------- đầu trang ---------- */
+
+.co-hero {
+  background: var(--ink);
+  color: #e7eef7;
+  padding: 64px 0 70px;
+  text-align: center;
+}
+
+.co-hero-in {
+  max-width: 820px;
+}
+
+.co-greet {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 206, 31, 0.36);
+  background: rgba(255, 206, 31, 0.12);
+  color: #ffdf7a;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.co-hero h1 {
+  margin-top: 20px;
+  font-size: clamp(26px, 4vw, 44px);
+  line-height: 1.16;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.co-price {
+  margin-top: 26px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 14px 28px;
+  border-radius: var(--r-panel);
+  background: var(--beam);
+  color: #2b1f00;
+}
+
+.co-price s {
+  font-size: 18px;
+  color: #6b4d00;
+}
+
+.co-price strong {
+  font-family: var(--display);
+  font-weight: 900;
+  font-size: clamp(34px, 5vw, 48px);
+  letter-spacing: -0.02em;
+}
+
+.co-seats {
+  margin: 16px auto 0;
+  max-width: 52ch;
+  font-size: 15px;
+  color: #cfe0f0;
+}
+
+.co-clock {
+  justify-content: center;
+}
+
+.co-jump {
+  margin-top: 26px;
+}
+
+/* ---------- 3 bước ---------- */
+
+.co-steps {
+  margin: 40px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.co-step {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-panel);
+  padding: 24px;
+}
+
+.co-step-no {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: var(--ink);
+  color: var(--beam);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.co-step h3 {
+  margin-top: 14px;
+  font-size: 19px;
+}
+
+.co-step p {
+  margin-top: 8px;
+  font-size: 15.5px;
+  color: var(--slate);
+}
+
+/* ---------- khối thanh toán ---------- */
+
+.co-pay {
+  max-width: 960px;
+  margin: 0 auto;
+  border-radius: var(--r-panel);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--lift);
+}
+
+.co-pay-head {
+  background: var(--ink);
+  color: var(--beam);
+  text-align: center;
+  padding: 18px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(19px, 2.4vw, 24px);
+}
+
+.co-pay-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 28px;
+  padding: 28px;
+  background: var(--surface);
+  align-items: center;
+}
+
+.co-rows {
+  margin: 0;
+}
+
+.co-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.co-row dt {
+  font-size: 14.5px;
+  color: var(--slate-2);
+}
+
+.co-row dd {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.co-row-key {
+  border-bottom: 0;
+  margin-top: 8px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--beam-wash);
+}
+
+.co-row-key b {
+  color: #4a3500;
+}
+
+.co-copy {
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.co-copy:hover {
+  border-color: var(--beam-2);
+}
+
+.co-qr-box {
+  text-align: center;
+}
+
+.co-qr-box canvas {
+  display: block;
+  margin: 0 auto;
+  width: 240px;
+  height: 240px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.co-qr-note {
+  margin: 12px auto 0;
+  max-width: 30ch;
+  font-size: 14px;
+  color: var(--slate);
+}
+
+.co-qr-pending {
+  padding: 40px 16px;
+}
+
+/* ---------- sau khi chuyển khoản ---------- */
+
+.co-lede {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.co-done-btns {
+  margin-top: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+
+/* ---------- quyền lợi ---------- */
+
+.co-gets {
+  max-width: 760px;
+  margin: 36px auto 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.co-gets li {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 13px 18px;
+  font-size: 16px;
+  color: var(--slate);
+}
+
+.co-gets b {
+  color: var(--ink);
+}
+
+/* ---------- câu hỏi thường gặp ---------- */
+
+.co-faq-wrap {
+  max-width: 820px;
+}
+
+.co-faq {
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.co-faq:first-of-type {
+  margin-top: 36px;
+}
+
+.co-faq summary {
+  cursor: pointer;
+  padding: 16px 20px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 16.5px;
+  color: var(--ink);
+}
+
+.co-faq p {
+  padding: 0 20px 18px;
+  color: var(--slate);
+  font-size: 15.5px;
+}
+
+/* ---------- màn hình hẹp ---------- */
+
+@media (max-width: 820px) {
+  .co-steps,
+  .co-pay-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .co-pay-body {
+    padding: 22px 18px;
+  }
+}

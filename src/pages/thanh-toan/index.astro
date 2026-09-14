@@ -1,0 +1,318 @@
+---
+import '../../styles/elearning.css';
+import '../../styles/checkout.css';
+import { course, contact, checkout, checkoutReady, curriculum, gifts, vnd } from '../../data/elearning';
+import { BANK_BINS } from '../../lib/vietqr';
+
+const ready = checkoutReady();
+const bank = checkout.bank;
+const bin = BANK_BINS[bank.binKey] ?? '';
+const title = 'Hoàn tất đăng ký khoá E-Learning Kỹ năng Đóng gói Tri thức | MAVA';
+
+const steps = [
+  { head: 'Chuyển khoản học phí', body: 'Quét mã QR hoặc chuyển theo thông tin bên dưới.' },
+  {
+    head: 'Kích hoạt khoá học',
+    body: checkout.activation || '',
+  },
+  { head: 'Vào học', body: 'Học mọi lúc trên máy tính hoặc điện thoại, mỗi ngày 30 phút.' },
+];
+
+const faqs = [
+  {
+    q: 'Tôi đã chuyển khoản xong thì làm gì tiếp?',
+    a: checkout.activation,
+  },
+  {
+    q: 'Tôi quên ghi số điện thoại trong nội dung chuyển khoản',
+    a: checkout.zalo
+      ? `Không sao. Chụp màn hình giao dịch thành công và gửi qua Zalo ${checkout.zalo} hoặc Facebook MAVA. Đội ngũ MAVA sẽ đối chiếu và kích hoạt cho bạn.`
+      : '',
+  },
+  {
+    q: 'Làm sao để chắc chắn tôi chuyển đúng tài khoản của MAVA?',
+    a: checkout.legal.company
+      ? `Tài khoản nhận học phí là tài khoản doanh nghiệp đứng tên ${bank.holder}, tức ${checkout.legal.company}, mã số thuế ${checkout.legal.taxCode}. Bạn có thể tra mã số thuế này trên cổng thông tin của cơ quan thuế để đối chiếu tên công ty trước khi chuyển.`
+      : '',
+  },
+];
+---
+
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/images/logo.png" />
+    <title>{title}</title>
+    <!-- Trang sau khi đăng ký, không cần xuất hiện trên Google. -->
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+
+  <body class="co-body">
+    <header class="topbar">
+      <div class="shell topbar-in">
+        <a class="brand" href="/" aria-label="MAVA, về trang khoá học">
+          <img src="/images/el/logo.png" alt="MAVA" width="480" height="279" />
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <section class="co-hero">
+        <div class="shell co-hero-in">
+          <p class="co-greet" id="co-greet">Bạn đã giữ suất học thành công.</p>
+          <h1>Còn một bước cuối để bắt đầu học Kỹ năng Đóng gói Tri thức</h1>
+          <div class="co-price">
+            <s>{vnd(course.originalPrice)}</s>
+            <strong>{vnd(course.price)}</strong>
+          </div>
+          <p class="co-seats">
+            Tiết kiệm {course.discountPercent}%, dành cho {course.seatLimit} học viên đăng ký sớm nhất.
+            Học phí tăng khi ưu đãi kết thúc.
+          </p>
+          <div class="clock co-clock">
+            <span>Ưu đãi còn</span>
+            <span class="clock-num" id="cd-m" aria-label="số phút còn lại">{String(course.countdownMinutes).padStart(2, '0')}</span>
+            <span>phút</span>
+            <span class="clock-num" id="cd-s" aria-label="số giây còn lại">00</span>
+            <span>giây</span>
+          </div>
+          <a class="btn btn-beam co-jump" href="#thanh-toan">Xem thông tin chuyển khoản</a>
+        </div>
+      </section>
+
+      <section class="band band-paper">
+        <div class="shell">
+          <h2 class="h-sec co-center">Hoàn tất đăng ký trong 3 bước</h2>
+          <ol class="co-steps">
+            {steps.map((s, i) => (
+              <li class="co-step">
+                <span class="co-step-no">Bước {i + 1}</span>
+                <h3>{s.head}</h3>
+                {s.body ? <p>{s.body}</p> : <p class="pending">Đang chờ thông tin: cách kích hoạt khoá học</p>}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section class="band" id="thanh-toan">
+        <div class="shell">
+          <div class="co-pay">
+            <div class="co-pay-head">Thông tin thanh toán học phí</div>
+            <div class="co-pay-body">
+              <dl class="co-rows">
+                <div class="co-row">
+                  <dt>Ngân hàng</dt>
+                  <dd>{bank.name || <span class="pending">Đang chờ</span>}</dd>
+                </div>
+                <div class="co-row">
+                  <dt>Chủ tài khoản</dt>
+                  <dd>{bank.holder || <span class="pending">Đang chờ</span>}</dd>
+                </div>
+                <div class="co-row">
+                  <dt>Số tài khoản</dt>
+                  <dd>
+                    {bank.account ? (
+                      <>
+                        <b>{bank.account}</b>
+                        <button class="co-copy" type="button" data-copy={bank.account}>Sao chép</button>
+                      </>
+                    ) : (
+                      <span class="pending">Đang chờ</span>
+                    )}
+                  </dd>
+                </div>
+                <div class="co-row">
+                  <dt>Số tiền</dt>
+                  <dd>
+                    <b>{vnd(course.price)}</b>
+                    <button class="co-copy" type="button" data-copy={String(course.price)}>Sao chép</button>
+                  </dd>
+                </div>
+                <div class="co-row co-row-key">
+                  <dt>Nội dung chuyển khoản</dt>
+                  <dd>
+                    {checkout.transferSuffix ? (
+                      <>
+                        <b id="co-memo">SĐT {checkout.transferSuffix}</b>
+                        <button class="co-copy" type="button" id="co-memo-copy" data-copy="">Sao chép</button>
+                      </>
+                    ) : (
+                      <span class="pending">Đang chờ cú pháp</span>
+                    )}
+                  </dd>
+                </div>
+              </dl>
+
+              <div class="co-qr-box">
+                {ready && bin ? (
+                  <>
+                    <canvas
+                      id="co-qr"
+                      width="240"
+                      height="240"
+                      aria-label="Mã VietQR chuyển khoản học phí"
+                      data-bin={bin}
+                      data-account={bank.account}
+                      data-amount={course.price}
+                      data-suffix={checkout.transferSuffix}
+                    ></canvas>
+                    <p class="co-qr-note">Mở app ngân hàng, chọn quét mã QR. Số tiền và nội dung được điền sẵn.</p>
+                  </>
+                ) : (
+                  <p class="pending co-qr-pending">Mã QR sẽ hiện khi có đủ thông tin tài khoản</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-ink">
+        <div class="shell co-center">
+          <h2 class="h-sec co-center">Chuyển khoản xong?</h2>
+          <p class="sec-lede co-lede">
+            Chụp màn hình giao dịch thành công và gửi cho MAVA để được kích hoạt nhanh nhất.
+          </p>
+          {checkout.zalo ? (
+            <div class="co-done-btns">
+              <a class="btn btn-beam" href={`https://zalo.me/${checkout.zalo.replace(/\D/g, '')}`} rel="noopener" target="_blank">
+                Gửi ảnh qua Zalo {checkout.zalo}
+              </a>
+              {checkout.facebook && (
+                <a class="btn btn-ghost" href={checkout.facebook} rel="noopener" target="_blank">
+                  Nhắn tin qua Facebook
+                </a>
+              )}
+            </div>
+          ) : (
+            <p class="pending">Đang chờ thông tin: số Zalo nhận ảnh chuyển khoản</p>
+          )}
+        </div>
+      </section>
+
+      <section class="band band-paper">
+        <div class="shell">
+          <h2 class="h-sec co-center">Bạn nhận được gì khi tham gia</h2>
+          <ul class="co-gets">
+            {curriculum.map((p, i) => (
+              <li><b>Phần {i + 1}.</b> {p.title}</li>
+            ))}
+            {gifts.map((g) => (
+              <li><b>Quà tặng.</b> {g.name}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="band">
+        <div class="shell co-faq-wrap">
+          <h2 class="h-sec co-center">Câu hỏi thường gặp</h2>
+          {faqs.map((f) => (
+            <details class="co-faq">
+              <summary>{f.q}</summary>
+              {f.a ? <p>{f.a}</p> : <p class="pending">Đang chờ thông tin để trả lời câu này</p>}
+            </details>
+          ))}
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="shell">
+        <div class="foot-in">
+          <div>
+            <img src="/images/el/logo.png" alt="MAVA" width="480" height="279" />
+            <p class="foot-co">{contact.company}</p>
+            {checkout.legal.taxCode && <p>Mã số thuế: {checkout.legal.taxCode}</p>}
+            <p>{contact.address}</p>
+          </div>
+          <div class="foot-right">
+            <p>Hotline <a href={`tel:${contact.hotlineTel}`}>{contact.hotline}</a></p>
+            <p>Email <a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      import QRCode from 'qrcode';
+      import { buildVietQR, toTransferText } from '../../lib/vietqr';
+
+      // Form ở trang khoá học lưu họ tên và số điện thoại vào sessionStorage trước khi chuyển sang.
+      // Dùng sessionStorage thay vì tham số trên URL để thông tin cá nhân không lộ khi chia sẻ link.
+      let reg: { name?: string; phone?: string } = {};
+      try {
+        reg = JSON.parse(sessionStorage.getItem('mava-reg') || '{}');
+      } catch {}
+
+      // Dùng chung mốc kết thúc với trang khoá học, để đồng hồ chạy tiếp chứ không đếm lại từ đầu.
+      (function countdown() {
+        const mEl = document.getElementById('cd-m');
+        const sEl = document.getElementById('cd-s');
+        if (!mEl || !sEl) return;
+        const KEY = 'mava-el-offer-until';
+        let until = 0;
+        try {
+          until = Number(localStorage.getItem(KEY) || 0);
+        } catch {}
+        if (!until || until < Date.now()) {
+          until = Date.now() + Number(mEl.textContent) * 60 * 1000;
+          try {
+            localStorage.setItem(KEY, String(until));
+          } catch {}
+        }
+        const tick = () => {
+          const total = Math.floor(Math.max(0, until - Date.now()) / 1000);
+          mEl.textContent = String(Math.floor(total / 60)).padStart(2, '0');
+          sEl.textContent = String(total % 60).padStart(2, '0');
+          if (total > 0) setTimeout(tick, 1000);
+        };
+        tick();
+      })();
+
+      const greet = document.getElementById('co-greet');
+      if (greet && reg.name) greet.textContent = `Cảm ơn ${reg.name}, bạn đã giữ suất học thành công.`;
+
+      const canvas = document.getElementById('co-qr') as HTMLCanvasElement | null;
+      const suffix = canvas?.dataset.suffix || '';
+      const phone = (reg.phone || '').replace(/\D/g, '');
+      const memoText = toTransferText(phone ? `${phone} ${suffix}` : `SDT ${suffix}`);
+
+      const memo = document.getElementById('co-memo');
+      const memoCopy = document.getElementById('co-memo-copy');
+      if (memo && phone) memo.textContent = memoText;
+      if (memoCopy) memoCopy.dataset.copy = phone ? memoText : '';
+
+      // Chỉ vẽ QR khi có số điện thoại, vì nội dung chuyển khoản phải chứa nó để đối chiếu.
+      if (canvas && phone) {
+        const payload = buildVietQR({
+          bin: canvas.dataset.bin!,
+          account: canvas.dataset.account!,
+          amount: Number(canvas.dataset.amount),
+          message: memoText,
+        });
+        QRCode.toCanvas(canvas, payload, { width: 240, margin: 1, errorCorrectionLevel: 'M' });
+      } else if (canvas) {
+        const note = document.createElement('p');
+        note.className = 'co-qr-note';
+        note.textContent = 'Không tìm thấy số điện thoại đăng ký. Hãy chuyển khoản theo thông tin bên cạnh, nội dung ghi số điện thoại của bạn.';
+        canvas.replaceWith(note);
+      }
+
+      document.querySelectorAll<HTMLButtonElement>('.co-copy').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const text = btn.dataset.copy;
+          if (!text) return;
+          try {
+            await navigator.clipboard.writeText(text);
+            const old = btn.textContent;
+            btn.textContent = 'Đã chép';
+            setTimeout(() => (btn.textContent = old), 1500);
+          } catch {}
+        });
+      });
+    </script>
+  </body>
+</html>

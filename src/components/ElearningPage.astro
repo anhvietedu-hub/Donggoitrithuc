@@ -15,6 +15,7 @@ import {
   audienceFit,
   audienceMisfit,
   vnd,
+  checkoutReady,
 } from '../data/elearning';
 
 // Cùng một trang chạy ở hai địa chỉ: gốc của donggoitrithuc.mavatraining.com
@@ -524,7 +525,7 @@ const nav = [
       <a class="btn btn-beam" href="#hoc-phi">Đăng ký học</a>
     </div>
 
-    <script define:vars={{ endpoint: registerForm.endpoint, minutes: course.countdownMinutes, hotline: contact.hotline }}>
+    <script define:vars={{ endpoint: registerForm.endpoint, goCheckout: checkoutReady(), minutes: course.countdownMinutes, hotline: contact.hotline }}>
       // Đồng hồ ưu đãi. Mốc kết thúc lưu trong localStorage để không nhảy lại
       // mỗi lần người xem tải lại trang trong cùng một phiên.
       (function countdown() {
@@ -613,6 +614,20 @@ const nav = [
             // Apps Script chuyển hướng sang googleusercontent nên phản hồi là opaque,
             // không đọc được. Chỉ lỗi mạng mới rơi xuống catch.
             await fetch(endpoint, { method: 'POST', mode: 'no-cors', body });
+
+            // Trang thanh toán đọc lại họ tên và số điện thoại để điền nội dung chuyển khoản.
+            // Lưu ở sessionStorage chứ không gắn lên URL để thông tin cá nhân không lộ khi chia sẻ link.
+            if (goCheckout) {
+              try {
+                sessionStorage.setItem(
+                  'mava-reg',
+                  JSON.stringify({ name: el.name.value.trim(), phone: el.phone.value.trim() })
+                );
+              } catch (e) {}
+              location.href = '/thanh-toan/';
+              return;
+            }
+
             live.hidden = true;
             done.hidden = false;
             done.scrollIntoView({ block: 'center', behavior: 'smooth' });
