@@ -1,7 +1,7 @@
 ---
 import '../../styles/elearning.css';
 import '../../styles/checkout.css';
-import { course, contact, checkout, checkoutReady, curriculum, gifts, vnd } from '../../data/elearning';
+import { course, contact, checkout, checkoutReady, vnd } from '../../data/elearning';
 import { BANK_BINS } from '../../lib/vietqr';
 
 const ready = checkoutReady();
@@ -189,20 +189,6 @@ const faqs = [
           ) : (
             <p class="pending">Đang chờ thông tin: số Zalo nhận ảnh chuyển khoản</p>
           )}
-        </div>
-      </section>
-
-      <section class="band band-paper">
-        <div class="shell">
-          <h2 class="h-sec co-center">Bạn nhận được gì khi tham gia</h2>
-          <ul class="co-gets">
-            {curriculum.map((p, i) => (
-              <li><b>Phần {i + 1}.</b> {p.title}</li>
-            ))}
-            {gifts.map((g) => (
-              <li><b>Quà tặng.</b> {g.name}</li>
-            ))}
-          </ul>
         </div>
       </section>
 
