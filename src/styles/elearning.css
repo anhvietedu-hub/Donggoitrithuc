@@ -252,6 +252,15 @@ h3 {
   font-size: 15px;
   font-weight: 500;
   color: #b8cbe0;
+  white-space: nowrap;
+}
+
+/* Năm mục menu cần thu gọn khoảng cách ở màn hình vừa để không xuống dòng. */
+@media (max-width: 960px) {
+  .topnav {
+    gap: 14px;
+    font-size: 14px;
+  }
 }
 
 .topnav a:hover {
