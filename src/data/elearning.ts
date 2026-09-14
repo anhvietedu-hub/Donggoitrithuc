@@ -18,17 +18,12 @@ export const course = {
   countdownMinutes: 30,
 };
 
-// Form đăng ký gửi về Google Form / Google Sheet.
-// Cách lấy: mở Google Form > Xem trước > chuột phải vào từng ô > Inspect để đọc name="entry.xxxxxxx".
-// Dán ID form vào formId và các entry tương ứng vào fields.
-// Khi formId còn rỗng, nút đăng ký tự chuyển sang gọi hotline nên trang không bao giờ mất lead.
+// Form đăng ký đổ thẳng về Google Sheet qua một Google Apps Script dạng Web App.
+// Mã script nằm ở google-apps-script/dang-ky.gs, hướng dẫn cài ở đầu file đó.
+// Dán URL Web App (dạng https://script.google.com/macros/s/.../exec) vào endpoint.
+// Khi endpoint còn rỗng, bấm gửi sẽ hiện lời nhắc gọi hotline để trang không nuốt mất lead.
 export const registerForm = {
-  formId: '', // ví dụ: '1FAIpQLSd_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-  fields: {
-    name: 'entry.000000001',
-    phone: 'entry.000000002',
-    email: 'entry.000000003',
-  },
+  endpoint: '',
 };
 
 export const contact = {
