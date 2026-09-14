@@ -138,9 +138,8 @@ export const curriculum = [
     sub: 'Gỡ rào cản trước khi bắt đầu',
     items: [
       'Vì sao hoàn thành hơn hoàn hảo là nguyên tắc sống còn, và cách thoát khỏi bẫy cầu toàn',
-      'Nguyên tắc tài liệu sống và văn hoá Kaizen: cải tiến 5 đến 20% mỗi vòng thay vì làm lại từ đầu',
       'Ai nên là người đóng gói tri thức, và cách phối hợp giữa chuyên gia với L&D khi chuyên gia không có thời gian',
-      'Cách chọn đúng đề bài đầu tiên để đóng gói, thay vì ôm đồm cả kho kiến thức',
+      'Nguyên tắc tài liệu sống và văn hoá Kaizen: cải tiến 5 đến 20% mỗi vòng thay vì làm lại từ đầu',
     ],
     outcome: 'Chọn được chủ đề đầu tiên để đóng gói và bắt tay vào làm ngay trong ngày.',
   },
