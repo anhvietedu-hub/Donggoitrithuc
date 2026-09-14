@@ -23,7 +23,7 @@ export const course = {
 // Dán URL Web App (dạng https://script.google.com/macros/s/.../exec) vào endpoint.
 // Khi endpoint còn rỗng, bấm gửi sẽ hiện lời nhắc gọi hotline để trang không nuốt mất lead.
 export const registerForm = {
-  endpoint: '',
+  endpoint: 'https://script.google.com/macros/s/AKfycbyxiyO50dfNhYHFz7QhHwbqK-tLu9dnh-9ZChqCS9ysJNGiK0tIc6Z5C7XiThlNIKNjHg/exec',
 };
 
 export const contact = {
