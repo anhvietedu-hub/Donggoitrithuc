@@ -1,0 +1,634 @@
+---
+import '../styles/elearning.css';
+import {
+  course,
+  registerForm,
+  contact,
+  pains,
+  whyNow,
+  comparison,
+  curriculum,
+  trainer,
+  gallery,
+  testimonialVideos,
+  gifts,
+  audienceFit,
+  audienceMisfit,
+  vnd,
+} from '../data/elearning';
+
+// Cùng một trang chạy ở hai địa chỉ: gốc của donggoitrithuc.mavatraining.com
+// và /elearning/ trên donggoi.mavatraining.com. Logo phải trỏ về đúng trang chủ của từng nơi.
+interface Props {
+  homeHref: string;
+}
+const { homeHref } = Astro.props;
+
+const title = 'Khoá học E-Learning Kỹ năng Đóng gói Tri thức | MAVA';
+const description =
+  'Biến kinh nghiệm thực chiến thành trọn bộ 5 tài liệu đào tạo chuẩn hoá: Outline, Slide, Bộ đề, Lesson Plan, Workbook. Học online, truy cập trọn đời, mỗi ngày 30 phút.';
+
+// Icon cho bìa từng phần. Vẽ thẳng bằng SVG nên không phải tải thêm ảnh nào.
+const partIcons: Record<string, string> = {
+  bulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10.5 21h3"/><path d="M12 2.5a6.5 6.5 0 0 0-3.8 11.8c.5.3.8.9.8 1.5v.2h6v-.2c0-.6.3-1.2.8-1.5A6.5 6.5 0 0 0 12 2.5z"/></svg>',
+  doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5h8l4.5 4.5V21.5H6z"/><path d="M14 2.5V7h4.5"/><path d="M9 12h6M9 15.5h6M9 19h3"/></svg>',
+  slide: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3.5" width="19" height="13" rx="1.8"/><path d="M12 16.5v4M8.5 20.5h7"/><path d="M6.5 8h7M6.5 11.5h4.5"/></svg>',
+  quiz: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 4.5H6.5a1.5 1.5 0 0 0-1.5 1.5v14a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5h-2"/><rect x="8.5" y="2.5" width="7" height="4" rx="1.2"/><path d="M8.5 12l1.8 1.8 3.4-3.6M8.5 17.5h7"/></svg>',
+  plan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="17" rx="2"/><path d="M2.5 9.5h19M8 2.5v4M16 2.5v4"/><path d="M12 13v3l2 1.2"/></svg>',
+};
+
+const giftTotal = gifts.reduce((sum, g) => sum + g.value, 0);
+const nav = [
+  { href: '#noi-dung', label: 'Nội dung học' },
+  { href: '#giang-vien', label: 'Giảng viên' },
+  { href: '#hoc-phi', label: 'Học phí' },
+];
+---
+
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/images/logo.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href="https://donggoitrithuc.mavatraining.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/images/el/teaching.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+
+  <body>
+    <header class="topbar">
+      <div class="shell topbar-in">
+        <a class="brand" href={homeHref} aria-label="MAVA, trang chủ khoá học">
+          <img src="/images/el/logo.png" alt="MAVA" width="480" height="279" />
+        </a>
+        <nav class="topnav" aria-label="Mục lục trang">
+          {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+        </nav>
+        <a class="btn btn-beam" href="#hoc-phi">Đăng ký học</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Màn hình đầu: khối chữ căn giữa ở trên, ảnh bộ sản phẩm trải rộng bên dưới. -->
+      <section class="hero">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="shell hero-in">
+          <div class="hero-copy">
+            <h1>{course.promise}</h1>
+            <p class="hero-lede">{course.lede}</p>
+            <div class="hero-cta">
+              <a class="btn btn-beam" href="#hoc-phi">Đăng ký học ngay</a>
+              <a class="btn btn-ghost" href="#noi-dung">Xem nội dung khoá học</a>
+            </div>
+            <p class="hero-cadence">{course.cadence}</p>
+          </div>
+
+          <div class="stack">
+            <picture>
+              <source srcset="/images/el/hero-kit.webp" type="image/webp" />
+              <img
+                class="stack-art"
+                src="/images/el/hero-kit.jpg"
+                alt="Khoá học E-Learning Kỹ năng Đóng gói Tri thức: bộ 5 tài liệu gồm outline, slide bài giảng, bộ câu hỏi kiểm tra, kế hoạch giảng dạy và sổ tay học viên"
+                width="1536"
+                height="1024"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </picture>
+          </div>
+        </div>
+      </section>
+
+      <div class="trust">
+        <div class="shell trust-in">
+          <span><strong>Hơn 6.000</strong> học viên đã đào tạo</span>
+          <span><strong>Hơn 6 năm</strong> đào tạo và phát triển con người</span>
+        </div>
+      </div>
+
+      <section class="band band-paper">
+        <div class="shell">
+          <div class="rule"></div>
+          <h2 class="h-sec">Bạn có đang ở trong tình trạng này không?</h2>
+
+          <ul class="pain-grid">
+            {pains.map((p) => <li class="pain-item">{p}</li>)}
+          </ul>
+
+          <p class="pain-turn">
+            Vấn đề không nằm ở chỗ bạn thiếu kiến thức. Vấn đề là chưa ai chỉ cho bạn quy trình
+            đóng gói kiến thức đó lại thành sản phẩm dùng được.
+          </p>
+        </div>
+      </section>
+
+      <!-- Cam nhan hoc vien: dung anh dai dien lam mat na, bam moi nhung iframe.
+           Nhung thang 6 iframe YouTube se lam trang nang len rat nhieu. -->
+      <section class="band" id="ket-qua">
+        <div class="shell">
+          <div class="rule"></div>
+          <h2 class="h-sec">Và đây là kết quả</h2>
+          <p class="sec-lede">
+            Học viên các chương trình của MAVA nói về Kỹ năng Đóng gói Tri thức. Bấm vào từng video
+            để nghe trực tiếp.
+          </p>
+
+          <div class="vids">
+            {testimonialVideos.map((v) => (
+              <button class="vid" type="button" data-id={v.id} aria-label={`Phát video cảm nhận của ${v.name}`}>
+                <span class="vid-frame">
+                  <img
+                    src={`https://i.ytimg.com/vi/${v.id}/maxresdefault.jpg`}
+                    alt=""
+                    width="1280"
+                    height="720"
+                    loading="lazy"
+                  />
+                  <span class="vid-play" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5v14l11-7z" fill="currentColor" /></svg>
+                  </span>
+                </span>
+                <span class="vid-name">{v.name}</span>
+                <span class="vid-role">{v.role}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-ink">
+        <div class="shell">
+          <div class="rule"></div>
+          <h2 class="h-sec h-sec-wide">
+            Đóng gói tri thức là kỹ năng đáng giá nhất của người làm đào tạo trong năm 2026
+          </h2>
+          <p class="sec-lede">
+            Khi ai cũng tìm được thông tin trong ba giây, thứ tạo ra khác biệt không còn là biết
+            nhiều, mà là biết cách hệ thống hoá và chuyển giao cái mình biết.
+          </p>
+
+          <div class="why-grid">
+            {whyNow.map((w) => (
+              <div class="why-item">
+                <h3>{w.head}</h3>
+                <p>{w.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-paper">
+        <div class="shell">
+          <div class="rule"></div>
+          <h2 class="h-sec">Cùng một chuyên môn, hai kết cục khác nhau</h2>
+
+          <!-- Hiện trạng bên trái, kết quả sau khoá học bên phải, đọc theo đúng chiều trước rồi sau. -->
+          <div class="vs">
+            <div class="vs-col vs-no">
+              <p class="vs-head">Khi kiến thức vẫn nằm trong đầu</p>
+              <ul>
+                {comparison.map((c) => <li>{c.unpacked}</li>)}
+              </ul>
+            </div>
+            <div class="vs-col vs-yes">
+              <p class="vs-head">Khi bạn biết đóng gói</p>
+              <ul>
+                {comparison.map((c) => <li>{c.packed}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-ink">
+        <div class="shell">
+          <div class="rule"></div>
+          <h2 class="h-sec">Quy trình này đã chạy thật trong doanh nghiệp</h2>
+          <p class="sec-lede">
+            Hình ảnh từ các lớp Đóng gói Tri thức và Nhân bản Nhân tài do MAVA tổ chức tại doanh
+            nghiệp. Bản E-Learning là chính quy trình đó, chia nhỏ để bạn tự học.
+          </p>
+
+          <div class="gal">
+            {gallery.map((g) => (
+              <figure>
+                <img src={g.src} alt={g.alt} loading="lazy" />
+                <figcaption>{g.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-paper">
+        <div class="shell">
+          <div class="rule"></div>
+          <h2 class="h-sec">Khoá học này dành cho ai</h2>
+
+          <div class="fit">
+            <div class="fit-col fit-yes">
+              <h3>Phù hợp với bạn nếu</h3>
+              <ul>
+                {audienceFit.map((a) => (
+                  <li>
+                    <span class="fit-mark" aria-hidden="true">✓</span>
+                    <span>{a}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="fit-col fit-no">
+              <h3>Chưa phù hợp nếu</h3>
+              <ul>
+                {audienceMisfit.map((a) => (
+                  <li>
+                    <span class="fit-mark" aria-hidden="true">✕</span>
+                    <span>{a}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="noi-dung">
+        <div class="shell">
+          <div class="rule"></div>
+          <h2 class="h-sec">Toàn bộ nội dung bạn sẽ học</h2>
+
+          <div class="parts">
+            {curriculum.map((p, i) => (
+              <>
+                <article class="part">
+                  <div class:list={['part-tile', p.image && 'part-tile-art']}>
+                    {p.image ? (
+                      <picture>
+                        <source srcset={`${p.image}.webp`} type="image/webp" />
+                        <img
+                          src={`${p.image}.jpg`}
+                          alt=""
+                          width="600"
+                          height="800"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    ) : (
+                      <>
+                        <span class="part-tile-icon" aria-hidden="true" set:html={partIcons[p.icon]} />
+                        <span class="part-tile-name">{p.tag}</span>
+                      </>
+                    )}
+                  </div>
+
+                  <div class="part-body">
+                    <p class="part-kicker">Phần {i + 1}</p>
+                    <h3>{p.title}</h3>
+                    <ul class="part-items">
+                      {p.items.map((it) => <li>{it}</li>)}
+                    </ul>
+                    <p class="part-out"><b>Sau phần này bạn có thể:</b> {p.outcome}</p>
+                  </div>
+                </article>
+
+                {i < curriculum.length - 1 && (
+                  <div class="part-link" aria-hidden="true">
+                    <svg viewBox="0 0 150 100" width="150" height="100" fill="none">
+                      <path
+                        d="M24 6C24 32 104 26 104 52c0 20 14 28 26 36"
+                        stroke="currentColor"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-dasharray="8 9"
+                      />
+                      <path
+                        d="M123.3 74.6 130 88l-14.9-.9"
+                        stroke="currentColor"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Toàn bộ mục này là một tấm ảnh do khách hàng thiết kế sẵn,
+           đã kèm tiêu đề nên không dựng lại tiêu đề bằng chữ nữa. -->
+      <section class="band band-paper">
+        <div class="shell">
+          <picture>
+            <source srcset="/images/el/vi-sao-elearning.webp" type="image/webp" />
+            <img
+              class="banner"
+              src="/images/el/vi-sao-elearning.jpg"
+              alt="Vì sao nên học bản E-Learning: học mọi lúc mọi nơi trên máy tính hoặc điện thoại, truy cập trọn đời xem lại không giới hạn, học theo từng module ngắn 10 đến 15 phút, cập nhật miễn phí trọn đời."
+              width="1600"
+              height="901"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </div>
+      </section>
+
+      <section class="band band-ink" id="giang-vien">
+        <div class="shell coach">
+          <div class="coach-photo">
+            <img
+              src="/images/v2/hero-portrait.jpg"
+              alt={`Trainer ${trainer.name}, ${trainer.role}`}
+              loading="lazy"
+            />
+          </div>
+          <div>
+            <div class="rule"></div>
+            <h2>{trainer.name}</h2>
+            <p class="coach-role">{trainer.role} · {trainer.credential}</p>
+            <div class="coach-story">
+              {trainer.story.map((s) => <p>{s}</p>)}
+            </div>
+            <div class="coach-clients">
+              <p class="coach-clients-h">Đã đào tạo cho đội ngũ tại</p>
+              <div class="chips">
+                {trainer.clients.map((c) => <span class="chip">{c}</span>)}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-paper">
+        <div class="shell">
+          <div class="rule"></div>
+          <h2 class="h-sec h-icon">
+            <svg class="h-icon-art" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2.2" y="7.6" width="19.6" height="4.6" rx="1.3" />
+              <path d="M4.1 12.2h15.8v7.9a1.5 1.5 0 0 1-1.5 1.5H5.6a1.5 1.5 0 0 1-1.5-1.5z" />
+              <path d="M12 7.6v14" />
+              <path d="M12 7.6S10.7 2.6 8.2 2.6a2.5 2.5 0 0 0 0 5z" />
+              <path d="M12 7.6s1.3-5 3.8-5a2.5 2.5 0 0 1 0 5z" />
+            </svg>
+            <span>Bốn phần quà đi kèm khi đăng ký</span>
+          </h2>
+
+          <!-- Mỗi phần quà là một tấm ảnh đã kèm sẵn tên, mô tả và trị giá,
+               nên không dựng lại các phần đó bằng chữ. Bảng kê ở mục học phí
+               vẫn giữ tên và giá dạng chữ để máy đọc và Google hiểu được. -->
+          <div class="gifts">
+            {gifts.map((g) => (
+              <picture class="gift">
+                <source srcset={`${g.image}.webp`} type="image/webp" />
+                <img
+                  src={`${g.image}.jpg`}
+                  alt={`${g.name}, trị giá ${vnd(g.value)}. ${g.body}`}
+                  width="620"
+                  height="980"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-ink" id="hoc-phi">
+        <div class="shell">
+          <div class="rule"></div>
+          <h2 class="h-sec h-sec-wide">Đăng ký khoá <span class="nw">E-Learning</span> Kỹ năng Đóng gói Tri thức</h2>
+
+          <div class="offer" style="margin-top: 40px">
+            <div>
+              <div class="manifest">
+                <h3>Bạn nhận được những gì</h3>
+                <div class="mline">
+                  <span>Khoá E-Learning Kỹ năng Đóng gói Tri thức</span>
+                  <span class="mline-val">{vnd(course.originalPrice - giftTotal)}</span>
+                </div>
+                {gifts.map((g) => (
+                  <div class="mline">
+                    <span>{g.name}</span>
+                    <span class="mline-val">{vnd(g.value)}</span>
+                  </div>
+                ))}
+                <div class="mtotal">
+                  <span>Tổng giá trị</span>
+                  <s>{vnd(course.originalPrice)}</s>
+                </div>
+              </div>
+
+              <div class="price-now">
+                <p class="price-now-lab">Học phí ưu đãi đợt này</p>
+                <p class="price-now-num">{vnd(course.price)}</p>
+                <p class="price-now-sub">
+                  Tiết kiệm {course.discountPercent}%, dành cho {course.seatLimit} học viên đăng ký
+                  sớm nhất. Học phí tăng khi ưu đãi kết thúc.
+                </p>
+              </div>
+
+              <div class="clock">
+                <span>Ưu đãi còn</span>
+                <span class="clock-num" id="cd-m" aria-label="số phút còn lại">30</span>
+                <span>phút</span>
+                <span class="clock-num" id="cd-s" aria-label="số giây còn lại">00</span>
+                <span>giây</span>
+              </div>
+            </div>
+
+            <div class="form-card">
+              <div id="form-live">
+                <h3>Để lại thông tin đăng ký</h3>
+                <p>Tư vấn viên MAVA liên hệ lại trong giờ làm việc để xác nhận và mở tài khoản học cho bạn.</p>
+
+                <form id="reg-form" novalidate>
+                  <label class="field">
+                    Họ và tên
+                    <input type="text" name="name" autocomplete="name" placeholder="Nguyễn Văn A" required />
+                  </label>
+                  <label class="field">
+                    Số điện thoại
+                    <input
+                      type="tel"
+                      name="phone"
+                      autocomplete="tel"
+                      inputmode="numeric"
+                      placeholder="09xxxxxxxx"
+                      pattern="[0-9+ .]{9,15}"
+                      required
+                    />
+                  </label>
+                  <label class="field">
+                    Email
+                    <input type="email" name="email" autocomplete="email" placeholder="ban@congty.com" required />
+                  </label>
+                  <label class="field">
+                    Đơn vị và vai trò
+                    <input type="text" name="org" autocomplete="organization" placeholder="Trưởng phòng Đào tạo, Công ty ABC" />
+                  </label>
+
+                  <button type="submit" class="btn btn-beam btn-wide">Đăng ký học ngay</button>
+                  <!-- Ô này để trống, chỉ hiện chữ khi script báo lỗi nhập liệu
+                       hoặc báo form chưa nối. Xoá hẳn thẻ thì script mất chỗ ghi. -->
+                  <p class="form-note" id="form-msg"></p>
+                </form>
+              </div>
+
+              <div class="form-done" id="form-done" hidden>
+                <h3>Đã nhận đăng ký của bạn</h3>
+                <p>
+                  Tư vấn viên MAVA sẽ gọi lại theo số bạn để lại để xác nhận và mở tài khoản học.
+                  Cần gấp thì gọi thẳng {contact.hotline}.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="shell">
+        <div class="foot-in">
+          <div>
+            <img src="/images/el/logo.png" alt="MAVA" width="480" height="279" />
+            <p class="foot-co">{contact.company}</p>
+            <p>{contact.address}</p>
+          </div>
+          <div class="foot-right">
+            <p>Hotline <a href={`tel:${contact.hotlineTel}`}>{contact.hotline}</a></p>
+            <p>Email <a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+          </div>
+        </div>
+        <p class="foot-legal">© {new Date().getFullYear()} MAVA. Khoá học E-Learning Kỹ năng Đóng gói Tri thức.</p>
+      </div>
+    </footer>
+
+    <div class="dock">
+      <div class="dock-price">
+        <s>{vnd(course.originalPrice)}</s>
+        <b>{vnd(course.price)}</b>
+      </div>
+      <a class="btn btn-beam" href="#hoc-phi">Đăng ký học</a>
+    </div>
+
+    <script define:vars={{ formId: registerForm.formId, fields: registerForm.fields, minutes: course.countdownMinutes, hotline: contact.hotline }}>
+      // Đồng hồ ưu đãi. Mốc kết thúc lưu trong localStorage để không nhảy lại
+      // mỗi lần người xem tải lại trang trong cùng một phiên.
+      (function countdown() {
+        const mEl = document.getElementById('cd-m');
+        const sEl = document.getElementById('cd-s');
+        if (!mEl || !sEl) return;
+
+        const KEY = 'mava-el-offer-until';
+        let until = Number(localStorage.getItem(KEY) || 0);
+        if (!until || until < Date.now()) {
+          until = Date.now() + minutes * 60 * 1000;
+          localStorage.setItem(KEY, String(until));
+        }
+
+        function tick() {
+          const left = Math.max(0, until - Date.now());
+          const total = Math.floor(left / 1000);
+          mEl.textContent = String(Math.floor(total / 60)).padStart(2, '0');
+          sEl.textContent = String(total % 60).padStart(2, '0');
+          if (left > 0) setTimeout(tick, 1000);
+        }
+        tick();
+      })();
+
+      // Bam vao anh dai dien thi moi nap iframe YouTube, va phat luon.
+      // Nap san ca 6 iframe se keo tut toc do tai trang.
+      (function videos() {
+        document.querySelectorAll('.vid').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            const frame = btn.querySelector('.vid-frame');
+            if (!id || !frame || frame.querySelector('iframe')) return;
+
+            const iframe = document.createElement('iframe');
+            iframe.src =
+              'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+            iframe.title = btn.getAttribute('aria-label') || '';
+            iframe.allow =
+              'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            iframe.allowFullscreen = true;
+            frame.replaceChildren(iframe);
+          });
+        });
+      })();
+
+      // Gửi đăng ký sang Google Form. Chưa cấu hình formId thì chuyển sang gọi hotline
+      // để trang không bao giờ nuốt mất một lead.
+      (function register() {
+        const form = document.getElementById('reg-form');
+        const msg = document.getElementById('form-msg');
+        const live = document.getElementById('form-live');
+        const done = document.getElementById('form-done');
+        if (!form) return;
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          if (!form.checkValidity()) {
+            msg.textContent = 'Vui lòng điền đủ họ tên, số điện thoại và email hợp lệ.';
+            form.reportValidity();
+            return;
+          }
+
+          if (!formId) {
+            // Ep chuyen sang tel: tren may tinh chi lam nguoi xem bi ket,
+            // de lai loi nhac kem so hotline bam duoc ngay ben duoi.
+            msg.textContent =
+              'Form đăng ký chưa được kết nối. Vui lòng gọi ' + hotline + ' để đăng ký trực tiếp.';
+            return;
+          }
+
+          const btn = form.querySelector('button[type="submit"]');
+          btn.disabled = true;
+          btn.textContent = 'Đang gửi...';
+
+          const data = new FormData();
+          // form.name lay ra thuoc tinh cua the form, khong phai o nhap lieu.
+          const el = form.elements;
+          data.append(fields.name, el.name.value.trim());
+          data.append(fields.phone, el.phone.value.trim());
+          data.append(fields.email, el.email.value.trim());
+          data.append(fields.org, el.org.value.trim());
+
+          try {
+            await fetch('https://docs.google.com/forms/d/e/' + formId + '/formResponse', {
+              method: 'POST',
+              mode: 'no-cors',
+              body: data,
+            });
+            live.hidden = true;
+            done.hidden = false;
+            done.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          } catch (err) {
+            btn.disabled = false;
+            btn.textContent = 'Đăng ký học ngay';
+            msg.textContent =
+              'Chưa gửi được, có thể do đường truyền. Vui lòng thử lại hoặc gọi ' + hotline + '.';
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
