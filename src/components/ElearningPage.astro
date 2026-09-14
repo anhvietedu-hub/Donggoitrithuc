@@ -516,6 +516,24 @@ const nav = [
       <a class="btn btn-beam" href="#hoc-phi">Đăng ký học</a>
     </div>
 
+    <button type="button" class="to-top" id="to-top" aria-label="Lên đầu trang" title="Lên đầu trang">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+
+    <script>
+      // Nút lên đầu trang chỉ hiện khi đã kéo xuống quá một màn hình.
+      (function toTop() {
+        const btn = document.getElementById('to-top');
+        if (!btn) return;
+        const sync = () => btn.classList.toggle('is-on', window.scrollY > window.innerHeight * 0.8);
+        window.addEventListener('scroll', sync, { passive: true });
+        sync();
+        btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      })();
+    </script>
+
     <script define:vars={{ endpoint: registerForm.endpoint, goCheckout: checkoutReady(), minutes: course.countdownMinutes, hotline: contact.hotline }}>
       // Đồng hồ ưu đãi. Mốc kết thúc lưu trong localStorage để không nhảy lại
       // mỗi lần người xem tải lại trang trong cùng một phiên.
