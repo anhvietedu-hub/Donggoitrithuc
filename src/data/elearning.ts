@@ -13,8 +13,8 @@ export const course = {
   lessonCount: 28,
   seatLimit: 10,
   originalPrice: 4990000,
-  price: 899000,
-  discountPercent: 82,
+  price: 699000,
+  discountPercent: 86,
   countdownMinutes: 30,
 };
 
