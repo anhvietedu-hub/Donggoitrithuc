@@ -2,7 +2,7 @@
  * MỘT FILE DUY NHẤT cho Web App của landing page donggoitrithuc.mavatraining.com.
  * Gồm hai việc:
  *   1. Nhận đăng ký từ form và ghi vào trang tính đầu tiên.
- *   2. Đếm lượt truy cập (trang tính "LuotTruyCap") và trả số liệu cho trang /bao-cao/.
+ *   2. Đếm lượt truy cập (trang tính "TruyCap") và trả số liệu cho trang /bao-cao/.
  *
  * CÀI ĐẶT:
  * 1. Mở Google Sheet nhận đăng ký > Tiện ích mở rộng > Apps Script.
@@ -25,12 +25,9 @@ const SHEET_NAME = '';
 const HEADERS = ['Thời gian', 'Họ và tên', 'Số điện thoại', 'Email', 'Trang đăng ký'];
 
 // Trang tính lưu lượt xem. Script tự tạo nếu chưa có.
-const TRACK_SHEET = 'LuotTruyCap';
-// Cột "Ngày" lưu dạng chữ yyyy-MM-dd. Gộp số liệu theo cột này cho chắc,
-// vì ô ngày giờ đọc lại từ Sheet không phải lúc nào cũng ra kiểu ngày.
+const TRACK_SHEET = 'TruyCap';
 const TRACK_HEADERS = [
   'Thời gian',
-  'Ngày',
   'Trang',
   'Nguồn',
   'Chi tiết nguồn',
@@ -94,10 +91,8 @@ function logHit(p) {
   const lock = LockService.getScriptLock();
   try {
     lock.waitLock(20000);
-    const now = new Date();
     trackSheet().appendRow([
-      now,
-      Utilities.formatDate(now, Session.getScriptTimeZone(), 'yyyy-MM-dd'),
+      new Date(),
       clip(p.page, 200),
       clip(p.source, 80) || 'Truy cập trực tiếp',
       clip(p.ref, 200),
@@ -148,7 +143,6 @@ function report() {
   const from = new Date();
   from.setHours(0, 0, 0, 0);
   from.setDate(from.getDate() - 29);
-  const fromKey = Utilities.formatDate(from, tz, 'yyyy-MM-dd');
 
   const values = sheet.getRange(2, 1, last - 1, TRACK_HEADERS.length).getValues();
   const today = Utilities.formatDate(now, tz, 'yyyy-MM-dd');
@@ -163,12 +157,13 @@ function report() {
 
   for (let i = 0; i < values.length; i++) {
     const row = values[i];
-    const day = dayKey(row, tz);
-    if (!day || day < fromKey) continue;
+    const when = row[0];
+    if (!(when instanceof Date) || when < from) continue;
 
-    const vid = String(row[7] || '');
-    const source = String(row[3] || 'Truy cập trực tiếp');
-    const device = String(row[6] || 'Không rõ');
+    const day = Utilities.formatDate(when, tz, 'yyyy-MM-dd');
+    const vid = String(row[6] || '');
+    const source = String(row[2] || 'Truy cập trực tiếp');
+    const device = String(row[5] || 'Không rõ');
 
     byDay[day] = (byDay[day] || 0) + 1;
     (dayVisitors[day] = dayVisitors[day] || {})[vid] = 1;
@@ -214,18 +209,6 @@ function report() {
     sources: sourceList,
     devices: deviceList,
   };
-}
-
-// Lấy ngày yyyy-MM-dd của một dòng: ưu tiên cột Ngày, không có thì suy từ cột Thời gian.
-function dayKey(row, tz) {
-  const text = String(row[1] || '').trim();
-  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
-
-  const when = row[0];
-  if (when instanceof Date) return Utilities.formatDate(when, tz, 'yyyy-MM-dd');
-
-  const parsed = new Date(when);
-  return isNaN(parsed.getTime()) ? '' : Utilities.formatDate(parsed, tz, 'yyyy-MM-dd');
 }
 
 // Khung 30 ngày, kể cả ngày chưa có lượt nào, để biểu đồ không bị đứt quãng.
