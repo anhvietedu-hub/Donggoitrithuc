@@ -1,6 +1,6 @@
 ---
 // Trang báo cáo truy cập nội bộ: /bao-cao/. Không cho công cụ tìm kiếm lập chỉ mục.
-// Số liệu lấy từ Apps Script (google-apps-script/thong-ke.gs) qua JSONP.
+// Số liệu lấy từ Apps Script (google-apps-script/mava-web-app.gs).
 import '../../styles/elearning.css';
 import '../../styles/report.css';
 import { analytics, analyticsReady } from '../../data/analytics';
@@ -116,7 +116,7 @@ const title = 'Báo cáo truy cập landing page | MAVA';
         };
 
         if (!ready) {
-          show('Chưa nối với Google Sheet. Dán script thong-ke.gs vào Apps Script rồi triển khai lại.');
+          show('Chưa nối với Google Sheet. Dán file mava-web-app.gs vào Apps Script rồi triển khai lại.');
           return;
         }
 
@@ -125,37 +125,43 @@ const title = 'Báo cáo truy cập landing page | MAVA';
 
         const fmt = (n) => Number(n || 0).toLocaleString('vi-VN');
 
-        function load() {
-          const cb = 'mavaReport' + Date.now();
-          const s = document.createElement('script');
-          const timer = setTimeout(() => {
-            show('Không tải được số liệu. Kiểm tra lại quyền truy cập của Web App Apps Script.');
-            s.remove();
-          }, 20000);
-
-          window[cb] = (res) => {
-            clearTimeout(timer);
-            delete window[cb];
-            s.remove();
-            if (!res || !res.ok) {
-              show((res && res.error) || 'Không đọc được số liệu.');
-              return;
-            }
-            data = res;
-            msg.hidden = true;
-            render();
-          };
-
-          s.src =
+        async function load() {
+          const url =
             endpoint +
             '?action=report&key=' + encodeURIComponent(key) +
-            '&callback=' + cb +
             '&t=' + Date.now();
-          s.onerror = () => {
-            clearTimeout(timer);
-            show('Không gọi được Apps Script. Kiểm tra đường dẫn Web App.');
-          };
-          document.head.appendChild(s);
+
+          let res;
+          try {
+            const r = await fetch(url, { cache: 'no-store' });
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            res = await r.json();
+          } catch (e) {
+            show(
+              'Không đọc được số liệu từ Google Apps Script (' + e.message + '). ' +
+                'Kiểm tra Web App còn sống và đang để "Người có quyền truy cập: Bất kỳ ai".'
+            );
+            return;
+          }
+
+          if (!res || res.ok === false) {
+            show((res && res.error) || 'Apps Script trả về lỗi.');
+            return;
+          }
+
+          // Bản script cũ chỉ trả về message, chưa có phần thống kê.
+          if (!res.days) {
+            show(
+              'Google Apps Script đang chạy bản cũ, chưa có phần thống kê. ' +
+                'Dán lại file mava-web-app.gs vào Apps Script, xoá hết mã cũ, ' +
+                'rồi Triển khai > Quản lý bản triển khai > Phiên bản mới.'
+            );
+            return;
+          }
+
+          data = res;
+          msg.hidden = true;
+          render();
         }
 
         function render() {
