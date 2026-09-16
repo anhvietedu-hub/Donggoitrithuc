@@ -3,6 +3,7 @@ import '../../styles/elearning.css';
 import '../../styles/checkout.css';
 import { course, contact, checkout, checkoutReady, vnd } from '../../data/elearning';
 import { BANK_BINS } from '../../lib/vietqr';
+import Tracker from '../../components/Tracker.astro';
 
 const ready = checkoutReady();
 const bank = checkout.bank;
@@ -300,5 +301,6 @@ const faqs = [
         });
       });
     </script>
+    <Tracker />
   </body>
 </html>

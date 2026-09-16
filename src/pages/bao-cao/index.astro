@@ -1,0 +1,291 @@
+---
+// Trang báo cáo truy cập nội bộ: /bao-cao/. Không cho công cụ tìm kiếm lập chỉ mục.
+// Số liệu lấy từ Apps Script (google-apps-script/thong-ke.gs) qua JSONP.
+import '../../styles/elearning.css';
+import '../../styles/report.css';
+import { analytics, analyticsReady } from '../../data/analytics';
+import { contact } from '../../data/elearning';
+
+const ready = analyticsReady();
+const title = 'Báo cáo truy cập landing page | MAVA';
+---
+
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/images/logo.png" />
+    <title>{title}</title>
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+
+  <body class="rp-body">
+    <header class="topbar">
+      <div class="shell topbar-in">
+        <a class="brand" href="/" aria-label="MAVA, trang chủ khoá học">
+          <img src="/images/el/logo.png" alt="MAVA" width="480" height="279" />
+        </a>
+        <span class="rp-tag">Báo cáo nội bộ</span>
+      </div>
+    </header>
+
+    <main class="shell rp-main">
+      <h1 class="rp-h1">Báo cáo truy cập landing page</h1>
+      <p class="rp-sub">
+        donggoitrithuc.mavatraining.com · số liệu 30 ngày gần nhất ·
+        <span id="rp-updated">đang tải…</span>
+      </p>
+
+      <p class="rp-msg" id="rp-msg" hidden></p>
+
+      <div class="rp-cards">
+        <div class="rp-card">
+          <p class="rp-card-lab">Lượt xem hôm nay</p>
+          <p class="rp-card-num" id="rp-views">—</p>
+          <p class="rp-card-note" id="rp-views-note">Mỗi lần mở trang tính là một lượt xem.</p>
+        </div>
+        <div class="rp-card">
+          <p class="rp-card-lab">Số khách hôm nay</p>
+          <p class="rp-card-num" id="rp-visitors">—</p>
+          <p class="rp-card-note" id="rp-visitors-note">Một người xem nhiều lần chỉ tính một khách.</p>
+        </div>
+        <div class="rp-card">
+          <p class="rp-card-lab">Lượt xem trong kỳ</p>
+          <p class="rp-card-num" id="rp-range-views">—</p>
+          <p class="rp-card-note" id="rp-range-note">Theo số ngày bạn đang chọn.</p>
+        </div>
+        <div class="rp-card">
+          <p class="rp-card-lab">Khách trong kỳ</p>
+          <p class="rp-card-num" id="rp-range-visitors">—</p>
+          <p class="rp-card-note">Cộng số khách của từng ngày trong kỳ.</p>
+        </div>
+      </div>
+
+      <section class="rp-panel">
+        <div class="rp-panel-head">
+          <h2>Truy cập theo ngày</h2>
+          <div class="rp-range" role="group" aria-label="Chọn số ngày">
+            <button type="button" class="rp-btn is-on" data-days="7">7 ngày</button>
+            <button type="button" class="rp-btn" data-days="14">14 ngày</button>
+            <button type="button" class="rp-btn" data-days="30">30 ngày</button>
+          </div>
+        </div>
+        <div class="rp-legend">
+          <span><i class="rp-dot rp-dot-views"></i>Lượt xem</span>
+          <span><i class="rp-dot rp-dot-visitors"></i>Khách</span>
+        </div>
+        <div class="rp-chart-wrap">
+          <div class="rp-chart" id="rp-chart"></div>
+        </div>
+      </section>
+
+      <div class="rp-two">
+        <section class="rp-panel">
+          <div class="rp-panel-head"><h2>Nguồn truy cập</h2></div>
+          <table class="rp-table">
+            <thead>
+              <tr><th>Nguồn</th><th>Lượt xem</th><th>Khách</th></tr>
+            </thead>
+            <tbody id="rp-sources">
+              <tr><td colspan="3">Đang tải…</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="rp-panel">
+          <div class="rp-panel-head"><h2>Thiết bị</h2></div>
+          <div class="rp-devices" id="rp-devices">Đang tải…</div>
+        </section>
+      </div>
+
+      <p class="rp-foot">
+        Trang này chỉ dành cho nội bộ MAVA, không hiện trên Google. Số liệu không lưu tên, số
+        điện thoại hay địa chỉ IP của người xem. Hotline {contact.hotline}.
+      </p>
+    </main>
+
+    <script
+      is:inline
+      define:vars={{ endpoint: analytics.endpoint, key: analytics.reportKey, ready }}
+    >
+      (function report() {
+        const msg = document.getElementById('rp-msg');
+        const show = (text) => {
+          msg.textContent = text;
+          msg.hidden = false;
+        };
+
+        if (!ready) {
+          show('Chưa nối với Google Sheet. Dán script thong-ke.gs vào Apps Script rồi triển khai lại.');
+          return;
+        }
+
+        let data = null;
+        let days = 7;
+
+        const fmt = (n) => Number(n || 0).toLocaleString('vi-VN');
+
+        function load() {
+          const cb = 'mavaReport' + Date.now();
+          const s = document.createElement('script');
+          const timer = setTimeout(() => {
+            show('Không tải được số liệu. Kiểm tra lại quyền truy cập của Web App Apps Script.');
+            s.remove();
+          }, 20000);
+
+          window[cb] = (res) => {
+            clearTimeout(timer);
+            delete window[cb];
+            s.remove();
+            if (!res || !res.ok) {
+              show((res && res.error) || 'Không đọc được số liệu.');
+              return;
+            }
+            data = res;
+            msg.hidden = true;
+            render();
+          };
+
+          s.src =
+            endpoint +
+            '?action=report&key=' + encodeURIComponent(key) +
+            '&callback=' + cb +
+            '&t=' + Date.now();
+          s.onerror = () => {
+            clearTimeout(timer);
+            show('Không gọi được Apps Script. Kiểm tra đường dẫn Web App.');
+          };
+          document.head.appendChild(s);
+        }
+
+        function render() {
+          document.getElementById('rp-updated').textContent =
+            'cập nhật ' + (data.updatedAt || '');
+          document.getElementById('rp-views').textContent = fmt(data.today.views);
+          document.getElementById('rp-visitors').textContent = fmt(data.today.visitors);
+
+          const list = (data.days || []).slice(-days);
+          const totalViews = list.reduce((s, d) => s + d.views, 0);
+          const totalVisitors = list.reduce((s, d) => s + d.visitors, 0);
+          document.getElementById('rp-range-views').textContent = fmt(totalViews);
+          document.getElementById('rp-range-visitors').textContent = fmt(totalVisitors);
+          document.getElementById('rp-range-note').textContent = days + ' ngày gần nhất.';
+
+          drawChart(list);
+          drawSources(data.sources || []);
+          drawDevices(data.devices || []);
+        }
+
+        function drawChart(list) {
+          const wrap = document.getElementById('rp-chart');
+          wrap.innerHTML = '';
+          const max = Math.max(1, ...list.map((d) => d.views));
+
+          list.forEach((d) => {
+            const col = document.createElement('div');
+            col.className = 'rp-col';
+            const label = d.date.slice(8) + '/' + d.date.slice(5, 7);
+            col.title = label + ': ' + d.views + ' lượt xem, ' + d.visitors + ' khách';
+
+            const bars = document.createElement('div');
+            bars.className = 'rp-bars';
+
+            const v = document.createElement('span');
+            v.className = 'rp-bar rp-bar-views';
+            v.style.height = Math.round((d.views / max) * 100) + '%';
+
+            const u = document.createElement('span');
+            u.className = 'rp-bar rp-bar-visitors';
+            u.style.height = Math.round((d.visitors / max) * 100) + '%';
+
+            const num = document.createElement('b');
+            num.className = 'rp-col-num';
+            num.textContent = d.views ? d.views : '';
+
+            const cap = document.createElement('span');
+            cap.className = 'rp-col-day';
+            cap.textContent = label;
+
+            bars.append(v, u);
+            col.append(num, bars, cap);
+            wrap.appendChild(col);
+          });
+        }
+
+        function drawSources(rows) {
+          const body = document.getElementById('rp-sources');
+          body.innerHTML = '';
+          if (!rows.length) {
+            body.innerHTML = '<tr><td colspan="3">Chưa có dữ liệu.</td></tr>';
+            return;
+          }
+          const max = rows[0].views || 1;
+          rows.slice(0, 12).forEach((r) => {
+            const tr = document.createElement('tr');
+            const name = document.createElement('td');
+            name.className = 'rp-src';
+            const bar = document.createElement('i');
+            bar.className = 'rp-src-bar';
+            bar.style.width = Math.round((r.views / max) * 100) + '%';
+            const text = document.createElement('span');
+            text.textContent = r.name;
+            name.append(bar, text);
+
+            const v = document.createElement('td');
+            v.textContent = fmt(r.views);
+            const u = document.createElement('td');
+            u.textContent = fmt(r.visitors);
+
+            tr.append(name, v, u);
+            body.appendChild(tr);
+          });
+        }
+
+        function drawDevices(rows) {
+          const box = document.getElementById('rp-devices');
+          box.innerHTML = '';
+          const total = rows.reduce((s, r) => s + r.views, 0);
+          if (!total) {
+            box.textContent = 'Chưa có dữ liệu.';
+            return;
+          }
+
+          const track = document.createElement('div');
+          track.className = 'rp-split';
+          rows.forEach((r, i) => {
+            const part = document.createElement('span');
+            part.className = 'rp-split-part rp-split-' + (i % 3);
+            part.style.width = (r.views / total) * 100 + '%';
+            part.title = r.name + ': ' + Math.round((r.views / total) * 100) + '%';
+            track.appendChild(part);
+          });
+          box.appendChild(track);
+
+          rows.forEach((r, i) => {
+            const row = document.createElement('div');
+            row.className = 'rp-dev-row';
+            row.innerHTML =
+              '<i class="rp-dot rp-split-' + (i % 3) + '"></i>' +
+              '<span>' + r.name + '</span>' +
+              '<b>' + Math.round((r.views / total) * 100) + '%</b>' +
+              '<em>' + fmt(r.views) + ' lượt</em>';
+            box.appendChild(row);
+          });
+        }
+
+        document.querySelectorAll('.rp-btn').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.rp-btn').forEach((b) => b.classList.remove('is-on'));
+            btn.classList.add('is-on');
+            days = Number(btn.dataset.days);
+            if (data) render();
+          });
+        });
+
+        load();
+        // Mở trang để đó cả ngày thì vẫn tự làm mới mỗi 5 phút.
+        setInterval(load, 5 * 60 * 1000);
+      })();
+    </script>
+  </body>
+</html>

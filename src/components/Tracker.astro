@@ -1,0 +1,65 @@
+---
+// Gửi một lượt xem về Apps Script. Không đặt cookie, không gửi tên hay số điện thoại.
+// Mã khách là chuỗi ngẫu nhiên do trình duyệt tự tạo, chỉ để đếm khách khác nhau.
+import { analytics, analyticsReady } from '../data/analytics';
+
+const enabled = analyticsReady();
+---
+
+{enabled && (
+  <script is:inline define:vars={{ endpoint: analytics.endpoint }}>
+    (function track() {
+      try {
+        if (navigator.webdriver) return;
+
+        var KEY = 'mava-vid';
+        var vid = '';
+        var first = '0';
+        try {
+          vid = localStorage.getItem(KEY) || '';
+          if (!vid) {
+            vid = Math.random().toString(36).slice(2) + Date.now().toString(36);
+            localStorage.setItem(KEY, vid);
+            first = '1';
+          }
+        } catch (e) {
+          // Trình duyệt chặn lưu trữ: vẫn đếm lượt xem, chỉ không nhận ra khách cũ.
+          vid = 'an-' + Math.random().toString(36).slice(2);
+          first = '1';
+        }
+
+        var q = new URLSearchParams(location.search);
+        var ref = document.referrer || '';
+        var refHost = '';
+        try {
+          refHost = ref ? new URL(ref).hostname.replace(/^www\./, '') : '';
+        } catch (e) {}
+        if (refHost === location.hostname) refHost = '';
+
+        var source = q.get('utm_source') || refHost || 'Truy cập trực tiếp';
+        var ua = navigator.userAgent || '';
+        var device = /iPad|Tablet|PlayBook|Silk|Android(?!.*Mobile)/i.test(ua)
+          ? 'Máy tính bảng'
+          : /Mobi|Android|iPhone|iPod|Windows Phone/i.test(ua)
+            ? 'Điện thoại'
+            : 'Máy tính';
+
+        var url =
+          endpoint +
+          '?action=hit' +
+          '&page=' + encodeURIComponent(location.pathname) +
+          '&source=' + encodeURIComponent(source) +
+          '&ref=' + encodeURIComponent(ref.slice(0, 200)) +
+          '&campaign=' + encodeURIComponent(q.get('utm_campaign') || '') +
+          '&device=' + encodeURIComponent(device) +
+          '&vid=' + encodeURIComponent(vid) +
+          '&first=' + first;
+
+        // Ảnh 1 điểm ảnh: gửi được sang tên miền khác, không chặn việc tải trang.
+        var img = new Image(1, 1);
+        img.referrerPolicy = 'no-referrer-when-downgrade';
+        img.src = url;
+      } catch (e) {}
+    })();
+  </script>
+)}
