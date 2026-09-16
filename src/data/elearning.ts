@@ -31,10 +31,10 @@ export const registerForm = {
 // không chuyển học viên sang một trang thanh toán thiếu số tài khoản.
 export const checkout = {
   bank: {
-    name: 'Ngân hàng Quân Đội (MB Bank)',
-    binKey: 'mbbank',
-    account: '1121888999',
-    holder: 'CÔNG TY CP TVDT VÀ PTNNL MAVA',
+    name: 'Ngân hàng Thương mại cổ phần Việt Nam Thịnh Vượng (VPBank)',
+    binKey: 'vpbank',
+    account: '0968126930',
+    holder: 'NGUYỄN ANH VIỆT',
   },
   // Nội dung chuyển khoản = số điện thoại học viên + hậu tố này.
   // Cú pháp gốc của MAVA là "SĐT_Donggoi"; dấu gạch dưới được đổi thành dấu cách
