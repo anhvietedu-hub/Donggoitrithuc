@@ -360,3 +360,62 @@
     min-width: 30px;
   }
 }
+
+/* Chọn khoảng ngày tuỳ ý cho biểu đồ. */
+.rp-pick {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  font-size: 14px;
+  color: var(--slate-2);
+}
+
+.rp-pick label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.rp-pick input[type='date'] {
+  font: inherit;
+  color: var(--ink);
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+}
+
+.rp-btn-apply {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+
+.rp-link {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--slate-2);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.rp-link[hidden] {
+  display: none;
+}
+
+@media (max-width: 560px) {
+  .rp-pick label {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+
+  .rp-pick input[type='date'] {
+    flex: 1;
+    min-width: 0;
+  }
+}

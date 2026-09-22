@@ -70,6 +70,14 @@ const title = 'Báo cáo truy cập landing page | MAVA';
             <button type="button" class="rp-btn" data-days="30">30 ngày</button>
           </div>
         </div>
+
+        <!-- Chọn đúng khoảng ngày muốn xem, trong phạm vi 30 ngày đang lưu. -->
+        <div class="rp-pick">
+          <label>Từ ngày <input type="date" id="rp-from" /></label>
+          <label>Đến ngày <input type="date" id="rp-to" /></label>
+          <button type="button" class="rp-btn rp-btn-apply" id="rp-apply">Xem khoảng này</button>
+          <button type="button" class="rp-link" id="rp-reset" hidden>Bỏ chọn khoảng ngày</button>
+        </div>
         <div class="rp-legend">
           <span><i class="rp-dot rp-dot-views"></i>Lượt xem</span>
           <span><i class="rp-dot rp-dot-visitors"></i>Khách</span>
@@ -122,8 +130,29 @@ const title = 'Báo cáo truy cập landing page | MAVA';
 
         let data = null;
         let days = 7;
+        // Khi người xem tự chọn khoảng ngày thì bỏ qua nút 7/14/30.
+        let range = null;
 
         const fmt = (n) => Number(n || 0).toLocaleString('vi-VN');
+        const viDate = (iso) => iso.slice(8) + '/' + iso.slice(5, 7) + '/' + iso.slice(0, 4);
+
+        const fromBox = document.getElementById('rp-from');
+        const toBox = document.getElementById('rp-to');
+        const resetBtn = document.getElementById('rp-reset');
+
+        // Chỉ cho chọn trong khoảng ngày thật sự có số liệu.
+        function limitPicker() {
+          const all = data.days || [];
+          if (!all.length) return;
+          const min = all[0].date;
+          const max = all[all.length - 1].date;
+          [fromBox, toBox].forEach((box) => {
+            box.min = min;
+            box.max = max;
+          });
+          if (!fromBox.value) fromBox.value = all.length > 7 ? all[all.length - 7].date : min;
+          if (!toBox.value) toBox.value = max;
+        }
 
         async function load() {
           const url =
@@ -165,17 +194,24 @@ const title = 'Báo cáo truy cập landing page | MAVA';
         }
 
         function render() {
+          limitPicker();
           document.getElementById('rp-updated').textContent =
             'cập nhật ' + (data.updatedAt || '');
           document.getElementById('rp-views').textContent = fmt(data.today.views);
           document.getElementById('rp-visitors').textContent = fmt(data.today.visitors);
 
-          const list = (data.days || []).slice(-days);
+          const all = data.days || [];
+          const list = range
+            ? all.filter((d) => d.date >= range.from && d.date <= range.to)
+            : all.slice(-days);
+
           const totalViews = list.reduce((s, d) => s + d.views, 0);
           const totalVisitors = list.reduce((s, d) => s + d.visitors, 0);
           document.getElementById('rp-range-views').textContent = fmt(totalViews);
           document.getElementById('rp-range-visitors').textContent = fmt(totalVisitors);
-          document.getElementById('rp-range-note').textContent = days + ' ngày gần nhất.';
+          document.getElementById('rp-range-note').textContent = range
+            ? 'Từ ' + viDate(range.from) + ' đến ' + viDate(range.to) + '.'
+            : days + ' ngày gần nhất.';
 
           drawChart(list);
           drawSources(data.sources || []);
@@ -279,13 +315,46 @@ const title = 'Báo cáo truy cập landing page | MAVA';
           });
         }
 
-        document.querySelectorAll('.rp-btn').forEach((btn) => {
+        document.querySelectorAll('.rp-btn[data-days]').forEach((btn) => {
           btn.addEventListener('click', () => {
-            document.querySelectorAll('.rp-btn').forEach((b) => b.classList.remove('is-on'));
+            document.querySelectorAll('.rp-btn[data-days]').forEach((b) => b.classList.remove('is-on'));
             btn.classList.add('is-on');
             days = Number(btn.dataset.days);
+            range = null;
+            resetBtn.hidden = true;
             if (data) render();
           });
+        });
+
+        document.getElementById('rp-apply').addEventListener('click', () => {
+          let from = fromBox.value;
+          let to = toBox.value;
+          if (!from || !to) {
+            show('Chọn cả ngày bắt đầu và ngày kết thúc.');
+            return;
+          }
+          if (from > to) {
+            const swap = from;
+            from = to;
+            to = swap;
+            fromBox.value = from;
+            toBox.value = to;
+          }
+          range = { from: from, to: to };
+          document.querySelectorAll('.rp-btn[data-days]').forEach((b) => b.classList.remove('is-on'));
+          resetBtn.hidden = false;
+          msg.hidden = true;
+          if (data) render();
+        });
+
+        resetBtn.addEventListener('click', () => {
+          range = null;
+          resetBtn.hidden = true;
+          const btn = document.querySelector('.rp-btn[data-days="7"]');
+          document.querySelectorAll('.rp-btn[data-days]').forEach((b) => b.classList.remove('is-on'));
+          btn.classList.add('is-on');
+          days = 7;
+          if (data) render();
         });
 
         load();
