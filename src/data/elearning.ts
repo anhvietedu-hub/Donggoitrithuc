@@ -38,7 +38,7 @@ export const checkout = {
   },
   // Nội dung chuyển khoản = họ tên + số điện thoại học viên + tên khoá học (hậu tố này).
   // Bỏ dấu và ký tự đặc biệt vì nhiều ngân hàng lọc mất chúng.
-  transferSuffix: 'Ky nang Dong goi Tri thuc',
+  transferSuffix: 'DGTT',
   // Mô tả thật cách kích hoạt; không hứa "tự động" vì MAVA kích hoạt tay.
   activation: 'MAVA sẽ liên hệ và kích hoạt tài khoản học cho bạn muộn nhất 24 giờ sau khi nhận được học phí.',
   zalo: '0968 126 930',
