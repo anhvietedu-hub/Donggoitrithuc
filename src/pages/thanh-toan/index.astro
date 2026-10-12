@@ -136,7 +136,7 @@ const faqs = [
                   <dd>
                     {checkout.transferSuffix ? (
                       <>
-                        <b id="co-memo">SĐT {checkout.transferSuffix}</b>
+                        <b id="co-memo">Họ và tên + SĐT + Tên khoá học</b>
                         <button class="co-copy" type="button" id="co-memo-copy" data-copy="">Sao chép</button>
                       </>
                     ) : (
@@ -265,7 +265,11 @@ const faqs = [
       const canvas = document.getElementById('co-qr') as HTMLCanvasElement | null;
       const suffix = canvas?.dataset.suffix || '';
       const phone = (reg.phone || '').replace(/\D/g, '');
-      const memoText = toTransferText(phone ? `${phone} ${suffix}` : `SDT ${suffix}`);
+      // Cú pháp MAVA đối chiếu: họ tên + số điện thoại + tên khoá học.
+      // Ô nội dung của ngân hàng chỉ nhận được một số ký tự nhất định, nên cắt ở 50.
+      const memoText = toTransferText(
+        phone ? `${reg.name || ''} ${phone} ${suffix}` : `Ho ten SDT ${suffix}`
+      );
 
       const memo = document.getElementById('co-memo');
       const memoCopy = document.getElementById('co-memo-copy');

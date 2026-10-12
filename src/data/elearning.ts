@@ -31,15 +31,14 @@ export const registerForm = {
 // không chuyển học viên sang một trang thanh toán thiếu số tài khoản.
 export const checkout = {
   bank: {
-    name: 'Ngân hàng Thương mại cổ phần Việt Nam Thịnh Vượng (VPBank)',
-    binKey: 'vpbank',
-    account: '0968126930',
-    holder: 'NGUYỄN ANH VIỆT',
+    name: 'Ngân hàng Thương mại cổ phần Quân đội (MB) - chi nhánh Tây Hà Nội',
+    binKey: 'mbbank',
+    account: '1121888999',
+    holder: 'CÔNG TY CP TVDT VÀ PTNNL MAVA',
   },
-  // Nội dung chuyển khoản = số điện thoại học viên + hậu tố này.
-  // Cú pháp gốc của MAVA là "SĐT_Donggoi"; dấu gạch dưới được đổi thành dấu cách
-  // vì nhiều ngân hàng lọc bỏ ký tự đặc biệt khỏi nội dung chuyển khoản.
-  transferSuffix: 'Donggoi',
+  // Nội dung chuyển khoản = họ tên + số điện thoại học viên + tên khoá học (hậu tố này).
+  // Bỏ dấu và ký tự đặc biệt vì nhiều ngân hàng lọc mất chúng.
+  transferSuffix: 'Ky nang Dong goi Tri thuc',
   // Mô tả thật cách kích hoạt; không hứa "tự động" vì MAVA kích hoạt tay.
   activation: 'MAVA sẽ liên hệ và kích hoạt tài khoản học cho bạn muộn nhất 24 giờ sau khi nhận được học phí.',
   zalo: '0968 126 930',
