@@ -43,6 +43,11 @@ const TRACK_HEADERS = [
 // Mật khẩu mở trang báo cáo. Đổi ở đây thì đổi luôn reportKey trong src/data/analytics.ts.
 const REPORT_KEY = 'mava2026';
 
+// Mốc bắt đầu tính số liệu, dạng yyyy-MM-dd. Mọi lượt xem trước 00h ngày này
+// vẫn nằm trong trang tính nhưng không được tính vào báo cáo.
+// Để trống ('') thì tính đủ 30 ngày gần nhất như trước.
+const START_DATE = '2026-10-12';
+
 /* ---------------- 1. Nhận đăng ký ---------------- */
 
 function doPost(e) {
@@ -139,7 +144,7 @@ function report() {
       ok: true,
       updatedAt: updatedAt,
       today: { views: 0, visitors: 0 },
-      days: emptyDays(tz),
+      days: emptyDays(tz, startKey(tz)),
       sources: [],
       devices: [],
     };
@@ -148,7 +153,8 @@ function report() {
   const from = new Date();
   from.setHours(0, 0, 0, 0);
   from.setDate(from.getDate() - 29);
-  const fromKey = Utilities.formatDate(from, tz, 'yyyy-MM-dd');
+  let fromKey = Utilities.formatDate(from, tz, 'yyyy-MM-dd');
+  if (START_DATE && START_DATE > fromKey) fromKey = START_DATE;
 
   const values = sheet.getRange(2, 1, last - 1, TRACK_HEADERS.length).getValues();
   const today = Utilities.formatDate(now, tz, 'yyyy-MM-dd');
@@ -182,7 +188,7 @@ function report() {
     }
   }
 
-  const days = emptyDays(tz).map(function (d) {
+  const days = emptyDays(tz, fromKey).map(function (d) {
     return {
       date: d.date,
       views: byDay[d.date] || 0,
@@ -228,12 +234,26 @@ function dayKey(row, tz) {
   return isNaN(parsed.getTime()) ? '' : Utilities.formatDate(parsed, tz, 'yyyy-MM-dd');
 }
 
-// Khung 30 ngày, kể cả ngày chưa có lượt nào, để biểu đồ không bị đứt quãng.
-function emptyDays(tz) {
+// Ngày bắt đầu khung biểu đồ: muộn hơn giữa mốc reset và 30 ngày trước.
+function startKey(tz) {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() - 29);
+  const key = Utilities.formatDate(d, tz, 'yyyy-MM-dd');
+  return START_DATE && START_DATE > key ? START_DATE : key;
+}
+
+// Khung ngày liên tục, kể cả ngày chưa có lượt nào, để biểu đồ không bị đứt quãng.
+function emptyDays(tz, firstKey) {
   const list = [];
-  const cursor = new Date();
+  // Tách tay yyyy-MM-dd để không phụ thuộc cách trình thông dịch hiểu chuỗi ngày.
+  const parts = String(firstKey || '').split('-');
+  const cursor =
+    parts.length === 3
+      ? new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))
+      : new Date();
   cursor.setHours(0, 0, 0, 0);
-  cursor.setDate(cursor.getDate() - 29);
+  if (parts.length !== 3) cursor.setDate(cursor.getDate() - 29);
   const end = new Date();
   end.setHours(0, 0, 0, 0);
   while (cursor <= end) {
