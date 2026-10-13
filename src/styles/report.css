@@ -17,7 +17,9 @@
 }
 
 .rp-main {
-  padding: 40px 0 70px;
+  /* Chỉ đặt khoảng cách trên dưới, giữ lề hai bên của .shell, nếu không trên
+     điện thoại nội dung sẽ dính sát mép màn hình. */
+  padding-block: 40px 70px;
 }
 
 .rp-h1 {
