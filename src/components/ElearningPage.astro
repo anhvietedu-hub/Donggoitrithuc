@@ -467,11 +467,16 @@ const nav = [
       <section class="band band-ink" id="giang-vien">
         <div class="shell coach">
           <div class="coach-photo">
-            <img
-              src="/images/v2/hero-portrait.jpg"
-              alt={`Trainer ${trainer.name}, ${trainer.role}`}
-              loading="lazy"
-            />
+            <picture>
+              <source srcset="/images/el/trainer.webp" type="image/webp" />
+              <img
+                src="/images/el/trainer.jpg"
+                alt={`Trainer ${trainer.name} đang đứng lớp`}
+                width="900"
+                height="1125"
+                loading="lazy"
+              />
+            </picture>
           </div>
           <div>
             <div class="rule"></div>

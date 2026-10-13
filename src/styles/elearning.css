@@ -901,6 +901,8 @@ h3 {
 
 .coach-photo img {
   width: 100%;
+  /* Ảnh có thuộc tính height nên phải trả về auto, không thì khung 4:5 bị bỏ qua. */
+  height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: 50% 22%;
